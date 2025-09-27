@@ -8,7 +8,7 @@ struct VAOattrib {
     GLint numComponents; // how many numbers make up the attribute? (e.g., 2 for vec2, 3 for vec3, etc.)
     GLenum type = GL_FLOAT; // data type of each component, default GL_FLOAT
     GLsizei stride; // Suppose each vertex has 6 floats: 3 for position, 3 for color, then stride is 6 * sizeof(float)
-    void* offset = nullptr; // position(x,y,z) | color(r,g,b), the color starts after the 3rd float (after z), so it pretty much starts there.
+    GLint offset = 0; // position(x,y,z) | color(r,g,b), the color starts after the 3rd float (after z), so it pretty much starts there.
 };
 
 class VAO
@@ -41,7 +41,14 @@ class VAO
     void LinkAttrib(VBO& vbo, const VAOattrib& attrib)
     {
         vbo.Bind();
-        glVertexAttribPointer(attrib.layout, attrib.numComponents, attrib.type, GL_FALSE, attrib.stride * sizeof(GLfloat), attrib.offset);
+        glVertexAttribPointer(
+            attrib.layout,
+            attrib.numComponents,
+            attrib.type,
+            GL_FALSE,
+            attrib.stride * sizeof(GLfloat),    // convert stride to bytes
+            (void*)(attrib.offset * sizeof(GLfloat)) // convert offset to bytes
+        );
         glEnableVertexAttribArray(attrib.layout);
         vbo.Unbind();
     }

@@ -1,6 +1,6 @@
 #include "Renderable.hpp"
 
-Renderable::Renderable(const std::vector<glm::vec3> Vertices,
+Renderable::Renderable(const std::vector<Vertex> Vertices,
                        const std::vector<GLuint> Indices,
                        const std::vector<VAOattrib> attrib)
 : vertices(std::move(Vertices)), indices(std::move(Indices))

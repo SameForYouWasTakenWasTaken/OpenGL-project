@@ -27,11 +27,11 @@ private:
     std::unique_ptr<Shader> shader;
     
 protected:
-    std::vector<glm::vec3> vertices;
+    std::vector<Vertex> vertices;
     std::vector<GLuint> indices;
     glm::vec3 position = {0,0,0};
 public:
-    Renderable(std::vector<glm::vec3> Vertices,
+    Renderable(std::vector<Vertex> Vertices,
            std::vector<GLuint> Indices = {},
            std::vector<VAOattrib> attrib = {});
 

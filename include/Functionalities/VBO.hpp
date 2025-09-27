@@ -1,22 +1,26 @@
 #pragma once
 #include <glad/glad.h>
 #include <vector>
+#include <glm/vec3.hpp>
+
+struct Vertex {
+    glm::vec3 position;
+    glm::vec3 color;
+};
 
 class VBO
 {
     GLuint ID;
 public:
-    VBO(const std::vector<glm::vec3>& vertices, GLenum usage = GL_STATIC_DRAW)
+    template<typename T>
+    VBO(const std::vector<T>& data, GLenum usage = GL_STATIC_DRAW)
     {
         glGenBuffers(1, &ID);
         glBindBuffer(GL_ARRAY_BUFFER, ID);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * vertices.size(), vertices.data(), usage);
-    }
-     VBO(const std::vector<glm::vec3>& vertices, GLsizeiptr size, GLenum usage = GL_STATIC_DRAW)
-    {
-        glGenBuffers(1, &ID);
-        glBindBuffer(GL_ARRAY_BUFFER, ID);
-        glBufferData(GL_ARRAY_BUFFER, size, vertices.data(), usage);
+        glBufferData(GL_ARRAY_BUFFER,
+                     data.size() * sizeof(T),
+                     data.data(),
+                     usage);
     }
     ~VBO()
     {

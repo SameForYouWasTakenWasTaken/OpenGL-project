@@ -53,22 +53,29 @@ bool Game::init(int width, int height) {
 
 void Game::run() {
 
-    std::vector<glm::vec3> vertices = {
-        {-0.5f, -0.5f, 0.0f},
-        {0.5f, -0.5f, 0.0f},
-        {0.0f,  0.5f, 0.0f}
+    std::vector<Vertex> vertices = {
+        {{-0.5f, -0.5f, 0.0f}, {0.1f, 0.2f, 0.3f}},
+        {{0.5f, -0.5f, 0.0f}, {0.1f, 0.5f, 0.6f}},
+        {{0.0f,  0.5f, 0.0f}, {0.1f, 0.3f, 0.9f}}
     };
 
     auto ShaderSources = ParseShaderFile("Shaders/Testing/triangle.glsl");    
 
-    VAOattrib vertex;
-    vertex.layout = 0;
-    vertex.numComponents = 3;
-    vertex.stride = 3;
+    VAOattrib pos;
+    pos.layout = 0;
+    pos.numComponents = 3;
+    pos.stride = 6;
+    pos.offset = 0;
+
+    VAOattrib color;
+    color.layout = 1;
+    color.numComponents = 3;
+    color.stride = 6;
+    color.offset = 3;
 
     std::vector<GLuint> indices = {0, 1, 2};
 
-    auto triangle = std::make_unique<Renderable>(vertices, indices, std::vector<VAOattrib>{vertex});
+    auto triangle = std::make_unique<Renderable>(vertices, indices, std::vector<VAOattrib>{pos, color});
 
     // Set up shaders separately
     triangle->set_shader_sources(ShaderSources.FragmentSource, ShaderSources.VertexSource);

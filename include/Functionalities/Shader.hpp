@@ -74,11 +74,10 @@ class Shader {
 
         // Bind attrib locations
         glBindAttribLocation(ID, 0, "aPos");  
+        glBindAttribLocation(ID, 1, "aColor");  
+
         // Link the program
         glLinkProgram(ID);
-        // Delete the shaders as they're linked into our program now and no longer necessary
-        glDeleteShader(vertexShader);
-        glDeleteShader(fragmentShader);
         
         GLint program_success;
         GLint vert_success;
@@ -97,10 +96,13 @@ class Shader {
             glGetProgramInfoLog(ID, 512, nullptr, program);
             spdlog::error("Vertex Shader: {}\nFragment Shader: {}\nProgram Link: {}", vert, frag, program);
         }
+        // Delete the shaders as they're no longer necessary
+        glDeleteShader(vertexShader);
+        glDeleteShader(fragmentShader);
     }
-public:
+    public:
     GLuint ID;
-
+    
     Shader(const char* vertexPath, const char* fragmentPath)
     {
         Create(vertexPath, fragmentPath);
