@@ -15,7 +15,7 @@ bool Game::init(int width, int height) {
     if(!glfwInit())
         return false;
 
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
@@ -58,7 +58,7 @@ void Game::run() {
         {{0.5f, -0.5f, 0.0f}, {1.f, 0.779f, 0.6f}},
         {{0.0f,  0.5f, 0.0f}, {0.1f, 0.3f, 0.9f}}
     };
-
+    
     std::string triangle_path = "Shaders/Testing/triangle.glsl";
     auto triangle = std::make_unique<Triangle>(vertices, triangle_path);
     // Now push it into the vector

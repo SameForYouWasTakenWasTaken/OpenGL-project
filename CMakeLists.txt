@@ -29,8 +29,13 @@ FetchContent_Declare(
     GIT_REPOSITORY https://github.com/gabime/spdlog.git
     GIT_TAG v1.15.3
 )
+# stb for textures
+FetchContent_Declare(
+    stb
+    GIT_REPOSITORY https://github.com/nothings/stb.git
+)
 
-FetchContent_MakeAvailable(glfw glm spdlog)
+FetchContent_MakeAvailable(glfw glm spdlog stb)
 
 # Add executable
 add_executable(main ${SRC_FILES} ${HEADER_FILES})
