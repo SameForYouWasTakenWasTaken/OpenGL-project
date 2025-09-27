@@ -3,7 +3,7 @@
 #include "Functionalities/VBO.hpp"
 #include "Functionalities/VAO.hpp"
 
-#include "Renderable.hpp"
+#include "Renderables/Triangle.hpp"
 
 #include <vector>
 #include <fstream>
@@ -54,32 +54,13 @@ bool Game::init(int width, int height) {
 void Game::run() {
 
     std::vector<Vertex> vertices = {
-        {{-0.5f, -0.5f, 0.0f}, {0.1f, 0.2f, 0.3f}},
-        {{0.5f, -0.5f, 0.0f}, {0.1f, 0.5f, 0.6f}},
+        {{-0.5f, -0.5f, 0.0f}, {0.5f, 0.2f, 0.3f}},
+        {{0.5f, -0.5f, 0.0f}, {1.f, 0.779f, 0.6f}},
         {{0.0f,  0.5f, 0.0f}, {0.1f, 0.3f, 0.9f}}
     };
 
-    auto ShaderSources = ParseShaderFile("Shaders/Testing/triangle.glsl");    
-
-    VAOattrib pos;
-    pos.layout = 0;
-    pos.numComponents = 3;
-    pos.stride = 6;
-    pos.offset = 0;
-
-    VAOattrib color;
-    color.layout = 1;
-    color.numComponents = 3;
-    color.stride = 6;
-    color.offset = 3;
-
-    std::vector<GLuint> indices = {0, 1, 2};
-
-    auto triangle = std::make_unique<Renderable>(vertices, indices, std::vector<VAOattrib>{pos, color});
-
-    // Set up shaders separately
-    triangle->set_shader_sources(ShaderSources.FragmentSource, ShaderSources.VertexSource);
-    triangle->create_shaders();
+    std::string triangle_path = "Shaders/Testing/triangle.glsl";
+    auto triangle = std::make_unique<Triangle>(vertices, triangle_path);
     // Now push it into the vector
     renderables.push_back(std::move(triangle));
 

@@ -16,6 +16,14 @@
 
 #include "Functionalities/Shader.hpp"
 
+enum class ROTATION
+{
+    NORTH,
+    WEST,
+    EAST,
+    SOUTH
+};
+
 class Renderable {
 private:
     std::string fragmentSource;
@@ -26,25 +34,32 @@ private:
     std::unique_ptr<EBO> ebo;
     std::unique_ptr<Shader> shader;
     
+    void UniformCalculations(); // Keep it organized
 protected:
     std::vector<Vertex> vertices;
     std::vector<GLuint> indices;
     glm::vec3 position = {0,0,0};
+    glm::vec3 rotation = {0,0,0};
 public:
     Renderable(std::vector<Vertex> Vertices,
-           std::vector<GLuint> Indices = {},
-           std::vector<VAOattrib> attrib = {});
-
-
+        std::vector<GLuint> Indices = {0, 1, 2},
+        std::vector<VAOattrib> attrib = {});
+        
+        
+    void LinkAttrib(VAOattrib& att);
+    void SetIndices(std::vector<GLuint>& Indices, GLenum usage = GL_STATIC_DRAW);
     void set_shader_sources(const std::string& frag_src, const std::string& vert_src); // Won't update the shaders.
     void create_shaders();
     void update_shaders();
     void update_shaders(const std::string& frag_src, const std::string& vert_src); // Update after setting the sources
    
-    virtual void setPosition(glm::vec3& newPos);
-    virtual void Move(glm::vec3 pos);
-    virtual std::pair<bool, bool> available_shader_sources(); // first : vertex, second : fragment
+    void setPosition(glm::vec3& newPos);
+    void Move(glm::vec3 pos);
+    void Rotate(float degrees, ROTATION rotation_direction);
+
+    std::pair<bool, bool> available_shader_sources(); // first : vertex, second : fragment
 
     void draw(GLenum usage);
-    void update(float dt);
+    virtual void BeforeDraw() = 0;
+    virtual void update(float dt) = 0;
 };

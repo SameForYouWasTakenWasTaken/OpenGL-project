@@ -33,8 +33,7 @@ class Game {
         {
             for (auto& renderable : renderables)
             {
-                renderable->Move({0.f, 0.05f, 0.f});
-                spdlog::info("HIO");
+                
             }
         }
     }
