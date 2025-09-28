@@ -1,5 +1,12 @@
 #include "Renderable.hpp"
 
+void Renderable::CacheUniformLocations()
+{
+    modelLoc = glGetUniformLocation(shader->ID, "model");
+    projLoc = glGetUniformLocation(shader->ID, "projection");
+    viewLoc = glGetUniformLocation(shader->ID, "view");
+}
+
 Renderable::Renderable(const std::vector<Vertex> Vertices,
                        const std::vector<GLuint> Indices,
                        const std::vector<VAOattrib> attrib)
@@ -28,17 +35,31 @@ void Renderable::LinkAttrib(VAOattrib& att)
     vao->Unbind();
 }
 
-void Renderable::SetIndices(std::vector<GLuint>& Indices, GLenum usage)
+void Renderable::SetIndices(const std::vector<GLuint>& Indices, GLenum usage)
 {
     indices = Indices;
 
     ebo->Bind();
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 
-                indices.size() * sizeof(GLuint), 
-                indices.data(), 
-                usage); // or GL_DYNAMIC_DRAW if you'll update often
+    ebo->Create(indices, usage);
     ebo->Unbind();
 
+}
+
+void Renderable::SetAspectRatio(unsigned int width, unsigned int height){
+    
+    float left = 0.0f;
+    float right = static_cast<float>(width);
+    float bottom = 0.0f;
+    float top = static_cast<float>(height);
+    float near = -1.0f;
+    float far = 1.0f;
+
+    projection = glm::ortho(0.0f, static_cast<float>(width),
+                        0.0f, static_cast<float>(height),
+                        near, far);
+
+    // For 3d:
+    // projection = glm::perspective(glm::radians(fov), width / (float)height, near, far);;
 }
 
 std::pair<bool, bool> Renderable::available_shader_sources()
@@ -61,14 +82,21 @@ void Renderable::set_shader_sources(const std::string& frag_src, const std::stri
 
 void Renderable::update_shaders()
 {
+    bool GotUniformLocs = false;
+
     auto shaders(available_shader_sources());
 
     if (shaders.first && shaders.second)
     {
-        if (!shader)
+        if (!shader){
             create_shaders();
+            GotUniformLocs = true;
+        }
         shader->Update(vertexSource.c_str(), fragmentSource.c_str());
     }
+
+    if (!GotUniformLocs)
+        CacheUniformLocations();
 }
 
 void Renderable::create_shaders()
@@ -80,9 +108,10 @@ void Renderable::create_shaders()
     {
         if (!shader) {
             shader = std::make_unique<Shader>(vertexSource.c_str(), fragmentSource.c_str());
+        }
     }
-    }
-
+    
+    CacheUniformLocations();
 }
 
 void Renderable::update_shaders(const std::string& frag_src, const std::string& vert_src) {
@@ -90,7 +119,7 @@ void Renderable::update_shaders(const std::string& frag_src, const std::string& 
     create_shaders();
 }
 
-void Renderable::setPosition(glm::vec3& newPos)
+void Renderable::setPosition(const glm::vec3& newPos)
 {
     position = newPos;
 }
@@ -118,22 +147,22 @@ void Renderable::Rotate(float degrees, ROTATION dir)
 
 void Renderable::UniformCalculations()
 {
-    glm::mat4 model = glm::mat4(1.0f);
-
+    model = glm::mat4(1.f);
     model = glm::translate(model, position); // Set position
 
     // Rotate based on the rotation vec3
     model = glm::rotate(model, glm::radians(rotation.x), glm::vec3(1,0,0));
     model = glm::rotate(model, glm::radians(rotation.y), glm::vec3(0,1,0));
-    model = glm::rotate(model, glm::radians(rotation.z), glm::vec3(0,0,1));
-    
-    
-    GLint modelLoc = glGetUniformLocation(shader->ID, "model");
+    model = glm::rotate(model, glm::radians(rotation.z), glm::vec3(0,0,1)); 
+
     glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+    glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
+    glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
 }
-void Renderable::draw(GLenum usage = GL_TRIANGLES)
+
+void Renderable::CommonDraw()
 {
-    if (!shader) {
+    if (!available_shader()) {
         spdlog::error("Renderable shader not initialized!");
         return; // prevent segfault
     }
@@ -141,10 +170,7 @@ void Renderable::draw(GLenum usage = GL_TRIANGLES)
     shader->Use();
     vao->Bind();
 
-    BeforeDraw(); // Custom functionality if any other derived class wants to add its own cool twists :upside_down_face:
     UniformCalculations();
 
-    // most important part of all !!!
-    glDrawElements(usage, indices.size(), GL_INT, 0);
-    
+    BeforeDraw(); // Custom functionality if any other derived class wants to add its own cool twists :upside_down_face:
 }

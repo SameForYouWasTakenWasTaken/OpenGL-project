@@ -4,6 +4,7 @@
 #include "Functionalities/VAO.hpp"
 
 #include "Renderables/Triangle.hpp"
+#include "Renderables/Circle.hpp"
 #include "ErrorReporting.hpp"
 
 #include <vector>
@@ -63,17 +64,23 @@ void Game::run() {
         {{0.0f,  0.5f, 0.0f}, {0.1f, 0.3f, 0.9f}}
     };
     
-    std::string triangle_path = "Shaders/Testing/triangle.glsl";
-    auto triangle = std::make_unique<Triangle>(vertices, triangle_path);
+    std::string circle_path = "Shaders/Testing/standard.glsl";
+    auto circle = std::make_unique<Circle>(50, 64, circle_path);
+    circle->setPosition({500, 500, 0});
     // Now push it into the vector
-    renderables.push_back(std::move(triangle));
+    renderables.push_back(std::move(circle));
+    
+    for (const auto& renderable : renderables)
+    {
+        renderable->SetAspectRatio(WIDTH, HEIGHT);
+    }
+
 
     // Main loop
     double lastFrame = 0.0;
     while(!glfwWindowShouldClose(window)) {
         double currentFrame = glfwGetTime();
         float deltaTime = static_cast<float>(currentFrame - lastFrame);
-        
         update(deltaTime);
         glClearColor(0.1f, 0.1f, 0.5f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
@@ -97,5 +104,13 @@ void Game::draw()
     for (const auto& renderable : renderables)
     {
         renderable->draw(GL_TRIANGLES);
+    }
+}
+
+void Game::onResize(int width, int height)
+{
+    glViewport(0, 0, width, height);
+    for (auto& rend : renderables) {
+        rend->SetAspectRatio(width, height);
     }
 }
