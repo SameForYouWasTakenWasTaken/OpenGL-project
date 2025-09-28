@@ -7,10 +7,12 @@ layout(location = 1) in vec3 aColor; // Get the color from location 1
 out vec3 vertexColor; // Output the vertex color
 
 uniform mat4 model; // CAREFUL! Uniforms must be used at least SOMEWHERE in your code, or else it will crash
+uniform mat4 view;
+uniform mat4 projection;
 
 void main()
 {
-    gl_Position = model * vec4(aPos, 1.0); // Add the position and offset it by the model (transform)
+    gl_Position = view * projection* model * vec4(aPos, 1.0);; // Add the position and offset it by the model (transform)
     vertexColor = aColor; // Assign the vertexColor, which will be passed over to the fragment shader below.
 }
 

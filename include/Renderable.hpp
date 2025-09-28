@@ -4,6 +4,7 @@
 #include <string>
 
 #include <glad/glad.h>
+#include <GLFW/glfw3.h>
 #include <glm/vec3.hpp>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp> // for glm::translate, glm::rotate, glm::scale
@@ -32,34 +33,63 @@ private:
     std::unique_ptr<VAO> vao;
     std::unique_ptr<VBO> vbo;
     std::unique_ptr<EBO> ebo;
-    std::unique_ptr<Shader> shader;
     
-    void UniformCalculations(); // Keep it organized
-protected:
+    std::unique_ptr<Shader> shader;
+
+    
+    GLint modelLoc;
+    GLint viewLoc;
+    GLint projLoc;
+
+    void CacheUniformLocations();
+    protected:
+    
     std::vector<Vertex> vertices;
     std::vector<GLuint> indices;
+    
     glm::vec3 position = {0,0,0};
     glm::vec3 rotation = {0,0,0};
-public:
+
+    glm::mat4 projection = glm::mat4(1.f);
+    glm::mat4 view = glm::mat4(1.f);
+    glm::mat4 model = glm::mat4(1.f);
+    
+    void UniformCalculations(); // Keep it organized
+    public:
     Renderable(std::vector<Vertex> Vertices,
         std::vector<GLuint> Indices = {0, 1, 2},
         std::vector<VAOattrib> attrib = {});
+        virtual ~Renderable() = default;
         
+        void LinkAttrib(VAOattrib& att);
+        void SetIndices(const std::vector<GLuint>& Indices, GLenum usage = GL_STATIC_DRAW);
+        void set_shader_sources(const std::string& frag_src, const std::string& vert_src); // Won't update the shaders.
+        void create_shaders();
+        void update_shaders();
+        void update_shaders(const std::string& frag_src, const std::string& vert_src); // Update after setting the sources
+
         
-    void LinkAttrib(VAOattrib& att);
-    void SetIndices(std::vector<GLuint>& Indices, GLenum usage = GL_STATIC_DRAW);
-    void set_shader_sources(const std::string& frag_src, const std::string& vert_src); // Won't update the shaders.
-    void create_shaders();
-    void update_shaders();
-    void update_shaders(const std::string& frag_src, const std::string& vert_src); // Update after setting the sources
-   
-    void setPosition(glm::vec3& newPos);
-    void Move(glm::vec3 pos);
-    void Rotate(float degrees, ROTATION rotation_direction);
+        void setPosition(const glm::vec3& newPos);
+        void Move(glm::vec3 pos);
+        void Rotate(float degrees, ROTATION rotation_direction);
+        
+        std::pair<bool, bool> available_shader_sources(); // first : vertex, second : fragment
+        bool available_shader() {return !!shader;}
+        
+        Shader* GetShader() { return shader.get(); }
+        VAO* GetVAO() {return vao.get();}
+        VBO* GetVBO() {return vbo.get();}
+        EBO* GetEBO() {return ebo.get();}
+        
+        void CommonDraw(); // All the important stuff done when drawing
+        
+        virtual void SetAspectRatio(unsigned int width, unsigned int height);
+        virtual void draw(GLenum usage) 
+        {
+            CommonDraw(); // By default, only runs CommonDraw, but you can change it how you want.
+            glDrawElements(usage, indices.size(), GL_UNSIGNED_INT, 0);
+        };
 
-    std::pair<bool, bool> available_shader_sources(); // first : vertex, second : fragment
-
-    void draw(GLenum usage);
-    virtual void BeforeDraw() = 0;
-    virtual void update(float dt) = 0;
+        virtual void BeforeDraw() = 0;
+        virtual void update(float dt) = 0;
 };

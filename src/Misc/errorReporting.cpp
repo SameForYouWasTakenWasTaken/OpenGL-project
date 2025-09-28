@@ -15,42 +15,41 @@ void APIENTRY glDebugOutput(GLenum source,
     // ignore non-significant error/warning codes
     if(id == 131169 || id == 131185 || id == 131218 || id == 131204) return; 
 
-	spdlog::error("---------------");
-	spdlog::error("Debug message ({}): {}", id, message);
+	spdlog::info("---------------");
+	spdlog::info("Debug message ({}): {}", id, message);
 
 	switch (source)
 	{
-		case GL_DEBUG_SOURCE_API:             spdlog::error("Source: API"); break;
-		case GL_DEBUG_SOURCE_WINDOW_SYSTEM:   spdlog::error("Source: Window System"); break;
-		case GL_DEBUG_SOURCE_SHADER_COMPILER: spdlog::error("Source: Shader Compiler"); break;
-		case GL_DEBUG_SOURCE_THIRD_PARTY:     spdlog::error("Source: Third Party"); break;
-		case GL_DEBUG_SOURCE_APPLICATION:     spdlog::error("Source: Application"); break;
-		case GL_DEBUG_SOURCE_OTHER:           spdlog::error("Source: Other"); break;
+		case GL_DEBUG_SOURCE_API:             spdlog::info("Source: API"); break;
+		case GL_DEBUG_SOURCE_WINDOW_SYSTEM:   spdlog::info("Source: Window System"); break;
+		case GL_DEBUG_SOURCE_SHADER_COMPILER: spdlog::info("Source: Shader Compiler"); break;
+		case GL_DEBUG_SOURCE_THIRD_PARTY:     spdlog::info("Source: Third Party"); break;
+		case GL_DEBUG_SOURCE_APPLICATION:     spdlog::info("Source: Application"); break;
+		case GL_DEBUG_SOURCE_OTHER:           spdlog::info("Source: Other"); break;
 	}
 
 	switch (type)
 	{
-		case GL_DEBUG_TYPE_ERROR:               spdlog::error("Type: Error"); break;
-		case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR: spdlog::error("Type: Deprecated Behaviour"); break;
-		case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:  spdlog::error("Type: Undefined Behaviour"); break; 
-		case GL_DEBUG_TYPE_PORTABILITY:         spdlog::error("Type: Portability"); break;
-		case GL_DEBUG_TYPE_PERFORMANCE:         spdlog::error("Type: Performance"); break;
-		case GL_DEBUG_TYPE_MARKER:              spdlog::error("Type: Marker"); break;
-		case GL_DEBUG_TYPE_PUSH_GROUP:          spdlog::error("Type: Push Group"); break;
-		case GL_DEBUG_TYPE_POP_GROUP:           spdlog::error("Type: Pop Group"); break;
-		case GL_DEBUG_TYPE_OTHER:               spdlog::error("Type: Other"); break;
+		case GL_DEBUG_TYPE_ERROR:               spdlog::info("Type: Error"); break;
+		case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR: spdlog::info("Type: Deprecated Behaviour"); break;
+		case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:  spdlog::info("Type: Undefined Behaviour"); break; 
+		case GL_DEBUG_TYPE_PORTABILITY:         spdlog::info("Type: Portability"); break;
+		case GL_DEBUG_TYPE_PERFORMANCE:         spdlog::info("Type: Performance"); break;
+		case GL_DEBUG_TYPE_MARKER:              spdlog::info("Type: Marker"); break;
+		case GL_DEBUG_TYPE_PUSH_GROUP:          spdlog::info("Type: Push Group"); break;
+		case GL_DEBUG_TYPE_POP_GROUP:           spdlog::info("Type: Pop Group"); break;
+		case GL_DEBUG_TYPE_OTHER:               spdlog::info("Type: Other"); break;
 	}
 	
 	switch (severity)
 	{
 		case GL_DEBUG_SEVERITY_HIGH:         spdlog::error("Severity: high"); break;
-		case GL_DEBUG_SEVERITY_MEDIUM:       spdlog::error("Severity: medium"); break;
-		case GL_DEBUG_SEVERITY_LOW:          spdlog::error("Severity: low"); break;
-		case GL_DEBUG_SEVERITY_NOTIFICATION: spdlog::error("Severity: notification"); break;
+		case GL_DEBUG_SEVERITY_MEDIUM:       spdlog::warn("Severity: medium"); break;
+		case GL_DEBUG_SEVERITY_LOW:          spdlog::warn("Severity: low"); break;
+		case GL_DEBUG_SEVERITY_NOTIFICATION: spdlog::info("Severity: notification"); break;
 	}
-	spdlog::error("");
+	spdlog::info("");
 }
-
 void enableReportGlErrors()
 {
 	glEnable(GL_DEBUG_OUTPUT);

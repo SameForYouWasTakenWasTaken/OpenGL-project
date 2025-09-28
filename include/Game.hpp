@@ -25,11 +25,14 @@ class Game {
         display_err_message(code, description);
     }
     static void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
-        glViewport(0, 0, width, height);
+        Game* game = reinterpret_cast<Game*>(glfwGetWindowUserPointer(window));
+        if (game) {
+            game->onResize(width, height);
+        }
     }
     void handleKey(int key, int action)
     {
-        if (key == GLFW_KEY_W && action == GLFW_PRESS)
+        if (key == GLFW_KEY_R && action == GLFW_PRESS)
         {
             for (auto& renderable : renderables)
             {
@@ -38,7 +41,7 @@ class Game {
         }
     }
 
-
+    void onResize(int width, int height);
 public:
 
     bool init(int width, int height);

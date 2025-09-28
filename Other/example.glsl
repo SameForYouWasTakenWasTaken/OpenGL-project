@@ -9,10 +9,12 @@ out vec3 vertexColor; // Output the vertex color
 
 // This is the model, which will help us shape our beautiful shapes, rotate them, position them, etc. This one should be global for all .glsl files.
 uniform mat4 model; // CAREFUL! Uniforms must be used at least SOMEWHERE in your code, or else it will crash.
+uniform mat4 view;
+uniform mat4 projection;
 
 void main()
 {
-    gl_Position = model * vec4(aPos, 1.0); // Add the position and offset it by the model (transform)
+   gl_Position = projection * view * model * vec4(aPos, 1.0); // Add the position and offset it by the model (transform)
     vertexColor = aColor; // Assign the vertexColor, which will be passed over to the fragment shader below.
 }
 
