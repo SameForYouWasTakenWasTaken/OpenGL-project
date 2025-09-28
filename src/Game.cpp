@@ -4,6 +4,7 @@
 #include "Functionalities/VAO.hpp"
 
 #include "Renderables/Triangle.hpp"
+#include "ErrorReporting.hpp"
 
 #include <vector>
 #include <fstream>
@@ -18,7 +19,9 @@ bool Game::init(int width, int height) {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
+    #if defined(_DEBUG) // Only in debug mode is debugging allowed. No shit.
+        glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true); // Allow debugging
+    #endif
     // Create a windowed mode window and its OpenGL context
     window = glfwCreateWindow(width, height, "OpenGL Window", nullptr, nullptr);
     if(!window) {
@@ -35,7 +38,7 @@ bool Game::init(int width, int height) {
         Game* game = reinterpret_cast<Game*>(glfwGetWindowUserPointer(win));
         if (game) game->handleKey(key, action);
     });
-
+    
     glfwSetWindowUserPointer(window, this);
 
     int version = gladLoadGL();
@@ -43,6 +46,7 @@ bool Game::init(int width, int height) {
         return false;
     }
 
+    enableReportGlErrors();
     spdlog::info("Loaded OpenGL: {}", version);
     // spdlog::info("GL Renderer: {}", glGetString(GL_RENDERER));
     // spdlog::info("GL Version: {}", glGetString(GL_VERSION));

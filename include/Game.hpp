@@ -33,7 +33,7 @@ class Game {
         {
             for (auto& renderable : renderables)
             {
-                
+                renderable->Rotate(10, ROTATION::NORTH);
             }
         }
     }
