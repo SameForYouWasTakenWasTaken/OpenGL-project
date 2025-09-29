@@ -71,11 +71,11 @@ class Shader {
         // Attach the shaders to the program
         glAttachShader(ID, vertexShader);
         glAttachShader(ID, fragmentShader);
-
+        
         // Bind attrib locations
         glBindAttribLocation(ID, 0, "aPos");  
         glBindAttribLocation(ID, 1, "aColor");  
-
+        
         // Link the program
         glLinkProgram(ID);
         
@@ -100,9 +100,16 @@ class Shader {
         glDeleteShader(vertexShader);
         glDeleteShader(fragmentShader);
     }
-    public:
+public:
     GLuint ID;
-    
+    GLint locProjection;
+    GLint locView;
+    void CacheUniforms()
+    {
+        Use();
+        locProjection = glGetUniformLocation(ID, "projection");
+        locView = glGetUniformLocation(ID, "view");
+    }
     Shader(const char* vertexPath, const char* fragmentPath)
     {
         Create(vertexPath, fragmentPath);

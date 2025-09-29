@@ -1,3 +1,4 @@
+#pragma once
 #include "Renderable.hpp"
 
 class Triangle : public Renderable {
