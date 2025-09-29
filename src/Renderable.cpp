@@ -38,9 +38,10 @@ void Renderable::SetIndices(const std::vector<GLuint>& Indices, GLenum usage)
 {
     indices = Indices;
 
+    vao->Bind();
     ebo->Bind();
     ebo->Create(indices, usage);
-    ebo->Unbind();
+    vao->Unbind();
 
 }
 

@@ -2,7 +2,7 @@
 
 Camera::Camera()
     : projType(ProjectionType::PERSPECTIVE),
-      fovDeg(45.0f), nearPlane(0.1f), farPlane(100.0f),
+      fovDeg(45.0f), nearPlane(0.1f), farPlane(500.0f),
       left_(-1), right_(1), bottom_(-1), top_(1),
       position({0,0,5}), front({0,0,0}), up({0,0,0}),
       dirtyView(true), dirtyProj(true), viewportWidth(800), viewportHeight(600)

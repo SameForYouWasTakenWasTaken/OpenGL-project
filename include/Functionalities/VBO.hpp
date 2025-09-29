@@ -5,7 +5,7 @@
 
 struct Vertex {
     glm::vec3 position;
-    glm::vec3 color;
+    glm::vec3 color = {1.f, 1.f, 1.f}; // default white
 };
 
 class VBO

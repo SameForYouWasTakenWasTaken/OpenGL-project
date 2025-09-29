@@ -38,13 +38,7 @@ class Game {
     }
     void handleKey(int key, int action)
     {
-        if (key == GLFW_KEY_R && action == GLFW_PRESS)
-        {
-            for (auto& renderable : renderables)
-            {
-                renderable->Rotate(10, ROTATION::NORTH);
-            }
-        }
+
     }
     
     void onResize(int width, int height);

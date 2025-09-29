@@ -1,6 +1,6 @@
 #include "Renderables/Triangle.hpp"
 
-Triangle::Triangle(std::vector<Vertex> vertices, std::string& pathToShaderSource)
+Triangle::Triangle(std::vector<Vertex>& vertices, std::string& pathToShaderSource)
 : Renderable(vertices)
 {
     auto ShaderSources = ParseShaderFile(pathToShaderSource);
