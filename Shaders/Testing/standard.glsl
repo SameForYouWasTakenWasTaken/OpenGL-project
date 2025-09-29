@@ -12,7 +12,7 @@ uniform mat4 projection;
 
 void main()
 {
-    gl_Position = view * projection* model * vec4(aPos, 1.0);; // Add the position and offset it by the model (transform)
+    gl_Position = projection * view * model * vec4(aPos, 1.0);; // Add the position and offset it by the model (transform)
     vertexColor = aColor; // Assign the vertexColor, which will be passed over to the fragment shader below.
 }
 

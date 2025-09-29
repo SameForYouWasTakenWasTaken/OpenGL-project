@@ -7,6 +7,8 @@
 #include <spdlog/spdlog.h>
 
 #include "Renderable.hpp"
+#include "Renderer.hpp"
+#include "Camera.hpp"
 
 template<typename... Args>
 void display_err_message(const Args&... msgs)
@@ -16,11 +18,15 @@ void display_err_message(const Args&... msgs)
 }
 
 class Game {
-    std::vector<std::unique_ptr<Renderable>> renderables;
     GLFWwindow* window;
+    Camera* camera;
+    Renderer* renderer;
+
+    std::vector<std::unique_ptr<Renderable>> renderables;
     unsigned int WIDTH;
     unsigned int HEIGHT;
 
+    
     static void error_callback(int code, const char* description) {
         display_err_message(code, description);
     }
@@ -40,7 +46,7 @@ class Game {
             }
         }
     }
-
+    
     void onResize(int width, int height);
 public:
 

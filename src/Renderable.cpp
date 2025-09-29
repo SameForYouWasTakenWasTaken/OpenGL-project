@@ -3,8 +3,7 @@
 void Renderable::CacheUniformLocations()
 {
     modelLoc = glGetUniformLocation(shader->ID, "model");
-    projLoc = glGetUniformLocation(shader->ID, "projection");
-    viewLoc = glGetUniformLocation(shader->ID, "view");
+    shader->CacheUniforms();
 }
 
 Renderable::Renderable(const std::vector<Vertex> Vertices,
@@ -43,23 +42,6 @@ void Renderable::SetIndices(const std::vector<GLuint>& Indices, GLenum usage)
     ebo->Create(indices, usage);
     ebo->Unbind();
 
-}
-
-void Renderable::SetAspectRatio(unsigned int width, unsigned int height){
-    
-    float left = 0.0f;
-    float right = static_cast<float>(width);
-    float bottom = 0.0f;
-    float top = static_cast<float>(height);
-    float near = -1.0f;
-    float far = 1.0f;
-
-    projection = glm::ortho(0.0f, static_cast<float>(width),
-                        0.0f, static_cast<float>(height),
-                        near, far);
-
-    // For 3d:
-    // projection = glm::perspective(glm::radians(fov), width / (float)height, near, far);;
 }
 
 std::pair<bool, bool> Renderable::available_shader_sources()
@@ -119,7 +101,7 @@ void Renderable::update_shaders(const std::string& frag_src, const std::string& 
     create_shaders();
 }
 
-void Renderable::setPosition(const glm::vec3& newPos)
+void Renderable::SetPosition(const glm::vec3& newPos)
 {
     position = newPos;
 }
@@ -145,6 +127,11 @@ void Renderable::Rotate(float degrees, ROTATION dir)
     rotation.z = fmod(rotation.z, 360.0f);
 }
 
+void Renderable::SetScale(const glm::vec3& amnt)
+{
+    scale = amnt;
+}
+
 void Renderable::UniformCalculations()
 {
     model = glm::mat4(1.f);
@@ -155,9 +142,10 @@ void Renderable::UniformCalculations()
     model = glm::rotate(model, glm::radians(rotation.y), glm::vec3(0,1,0));
     model = glm::rotate(model, glm::radians(rotation.z), glm::vec3(0,0,1)); 
 
+    // Scale
+    model = glm::scale(model, scale);
+    // Projection, view and model matrix stuff
     glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-    glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
-    glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
 }
 
 void Renderable::CommonDraw()

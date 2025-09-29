@@ -37,9 +37,8 @@ private:
     std::unique_ptr<Shader> shader;
 
     
+    // transformation locations for CacheUniformLocations
     GLint modelLoc;
-    GLint viewLoc;
-    GLint projLoc;
 
     void CacheUniformLocations();
     protected:
@@ -48,10 +47,9 @@ private:
     std::vector<GLuint> indices;
     
     glm::vec3 position = {0,0,0};
-    glm::vec3 rotation = {0,0,0};
+    glm::vec3 rotation = {0,0,0}; // In degrees
+    glm::vec3 scale    = {1,1,1}; // Default on all sides. 0,0,0 makes it practically.. Not there. 2,2,2 is double the size, for example
 
-    glm::mat4 projection = glm::mat4(1.f);
-    glm::mat4 view = glm::mat4(1.f);
     glm::mat4 model = glm::mat4(1.f);
     
     void UniformCalculations(); // Keep it organized
@@ -61,6 +59,7 @@ private:
         std::vector<VAOattrib> attrib = {});
         virtual ~Renderable() = default;
         
+        // Construction functions
         void LinkAttrib(VAOattrib& att);
         void SetIndices(const std::vector<GLuint>& Indices, GLenum usage = GL_STATIC_DRAW);
         void set_shader_sources(const std::string& frag_src, const std::string& vert_src); // Won't update the shaders.
@@ -69,10 +68,12 @@ private:
         void update_shaders(const std::string& frag_src, const std::string& vert_src); // Update after setting the sources
 
         
-        void setPosition(const glm::vec3& newPos);
+        // Transforming, positions, etc
+        void SetPosition(const glm::vec3& newPos);
         void Move(glm::vec3 pos);
         void Rotate(float degrees, ROTATION rotation_direction);
-        
+        void SetScale(const glm::vec3& amnt);
+        // Information functions
         std::pair<bool, bool> available_shader_sources(); // first : vertex, second : fragment
         bool available_shader() {return !!shader;}
         
@@ -81,9 +82,9 @@ private:
         VBO* GetVBO() {return vbo.get();}
         EBO* GetEBO() {return ebo.get();}
         
+        // Drawing, updates, rendering logic
         void CommonDraw(); // All the important stuff done when drawing
         
-        virtual void SetAspectRatio(unsigned int width, unsigned int height);
         virtual void draw(GLenum usage) 
         {
             CommonDraw(); // By default, only runs CommonDraw, but you can change it how you want.
