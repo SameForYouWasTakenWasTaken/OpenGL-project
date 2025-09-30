@@ -209,5 +209,5 @@ void Game::draw()
 void Game::onResize(int width, int height)
 {
     glViewport(0, 0, width, height);
-    renderer->update_aspect_ratio(static_cast<float>(width) / static_cast<float>(height));
+    renderer->update_aspect_ratio(static_cast<float>(width), static_cast<float>(height));
 }

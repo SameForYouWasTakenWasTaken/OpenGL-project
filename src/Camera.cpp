@@ -16,6 +16,27 @@ void Camera::setPerspective(float fov, float nearP, float farP) {
     dirtyProj = true;
 }
 
+void Camera::setFOV(float fovDeg) {
+    this->fovDeg = fovDeg;
+    dirtyProj = true;
+}
+
+void Camera::setNearPlane(float nearPlane) {
+    this->nearPlane = nearPlane;
+    dirtyProj = true;
+}
+
+void Camera::setFarPlane(float farPlane) {
+    this->farPlane = farPlane;
+    dirtyProj = true;
+}
+
+void Camera::setViewport(int width, int height) {
+    viewportWidth = width;
+    viewportHeight = height;
+    dirtyProj = true;
+}
+
 void Camera::setPosition(const glm::vec3& pos) {
     position = pos;
     dirtyView = true;

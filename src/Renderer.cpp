@@ -10,9 +10,9 @@ void Renderer::uploadViewProjToShader(Shader& shader) {
     glUniformMatrix4fv(shader.locView, 1, GL_FALSE, glm::value_ptr(view));
 }
 
-void Renderer::update_aspect_ratio(float aspect) {
+void Renderer::update_aspect_ratio(float width, float height) {
     if (camera) {
-        camera->setAspectRatio(aspect);
+        camera->setViewportSize(static_cast<int>(width), static_cast<int>(height));
     }
 }
 

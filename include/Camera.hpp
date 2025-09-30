@@ -25,6 +25,7 @@ int viewportWidth, viewportHeight;
 // cache
 mutable glm::mat4 cachedView;
 mutable glm::mat4 cachedProj;
+// Flags that say if the cache is outdated and need recomputing
 mutable bool dirtyView;
 mutable bool dirtyProj;
 
@@ -46,6 +47,10 @@ void lookAtTarget(const glm::vec3& target, const glm::vec3& up = {0,1,0});
 void setViewportSize(int width, int height); // call on resize
 void setDirection(const glm::vec3& forward, const glm::vec3& upHint);
 void setAspectRatio(float aspect);
+void setFOV(float fovDeg);
+void setNearPlane(float nearPlane);
+void setFarPlane(float farPlane);
+void setViewport(int width, int height);
 
 // Read-functions
 const glm::mat4& getView();
