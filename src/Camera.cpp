@@ -114,3 +114,20 @@ void Camera::Rotate(const glm::vec3& rotationDelta) {
     updateVectors();
     dirtyView = true;
 }
+
+void Camera::setAspectRatio(float aspect) {
+    if (projType == ProjectionType::PERSPECTIVE) {
+        // Just update the projection matrix with new aspect ratio
+        cachedProj = glm::perspective(glm::radians(fovDeg), aspect, nearPlane, farPlane);
+        dirtyProj = false;
+    } else {
+        // For orthographic, you might want to adjust left/right/top/bottom based on aspect
+        float orthoHeight = top_ - bottom_;
+        float orthoWidth = orthoHeight * aspect;
+        float centerX = (left_ + right_) / 2.0f;
+        left_ = centerX - orthoWidth / 2.0f;
+        right_ = centerX + orthoWidth / 2.0f;
+        cachedProj = glm::ortho(left_, right_, bottom_, top_, -1.0f, 1.0f);
+        dirtyProj = false;
+    }
+}

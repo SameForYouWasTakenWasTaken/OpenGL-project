@@ -49,6 +49,7 @@ public:
     void lookAtTarget(const glm::vec3& target, const glm::vec3& up = {0,1,0});
     void setViewportSize(int width, int height); // call on resize
     void setDirection(const glm::vec3& forward, const glm::vec3& upHint);
+    void setAspectRatio(float aspect); // modifies the projection matrix
     // Read-functions
     const glm::mat4& getView();
     const glm::mat4& getProjection();

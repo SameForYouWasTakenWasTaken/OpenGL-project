@@ -10,6 +10,12 @@ void Renderer::uploadViewProjToShader(Shader& shader) {
     glUniformMatrix4fv(shader.locView, 1, GL_FALSE, glm::value_ptr(view));
 }
 
+void Renderer::update_aspect_ratio(float aspect) {
+    if (camera) {
+        camera->setAspectRatio(aspect);
+    }
+}
+
 void Renderer::draw(const std::vector<std::unique_ptr<Renderable>>& renderables) {
     for (const auto& obj : renderables) {
         if (!obj->available_shader()) 
