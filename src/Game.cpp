@@ -18,6 +18,8 @@ bool Game::init(int width, int height){
     HEIGHT = height;
     if(!glfwInit())
         return false;
+    
+    imgui = new ImGui_Implement(); // Create ImGui handler
 
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -28,15 +30,18 @@ bool Game::init(int width, int height){
         glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true); // Allow debugging
     #endif
 
-    // Create a windowed mode window and its OpenGL context
+    // Create a windowed mode window and its OpenGL context, alongside ImGui
+    float main_scale = ImGui_ImplGlfw_GetContentScaleForMonitor(glfwGetPrimaryMonitor());
     window = glfwCreateWindow(width, height, "OpenGL Window", nullptr, nullptr);
     if(!window) {
         glfwTerminate();
         return false;
     }
     glfwMakeContextCurrent(window);
+    // glfwSwapInterval(1); // VSync
 
-    // Set callbacks
+
+    // Set callbacks    
     glfwSetErrorCallback(error_callback);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     glfwSetKeyCallback(window, [](GLFWwindow* win, int key, int scancode, int action, int mods){
@@ -66,12 +71,15 @@ bool Game::init(int width, int height){
     // spdlog::info("GL Version: {}", glGetString(GL_VERSION));
     // spdlog::info("GL Shading Language Version: {}", glGetString(GL_SHADING_LANGUAGE_VERSION));
 
+    // Setup ImGui
+    imgui->Init(main_scale, window);
     return true;
 }
 
 void Game::run() {
     camera = new Camera();
     renderer = new Renderer(camera);
+    imgui->AssignRenderer(renderer);
 
     std::vector<Vertex> triangle_vertices = {
         {{-0.5f, -0.5f, 0.0f}, {1.5f, 0.2f, 0.3f}}, // Bottom left
@@ -146,9 +154,9 @@ void Game::run() {
     obj3->SetScale({2.f,2.f,2.f});
 
     // Now push it into the vector
+    renderables.push_back(std::move(obj3));
     renderables.push_back(std::move(obj));
     renderables.push_back(std::move(obj2));
-    renderables.push_back(std::move(obj3));
 
     // Main loop
     double lastFrame = glfwGetTime();
@@ -157,11 +165,14 @@ void Game::run() {
         double currentFrame = glfwGetTime();
         float deltaTime = static_cast<float>(currentFrame - lastFrame);
         lastFrame = currentFrame;
+
+        imgui->NewFrame();
         update(deltaTime);
         glClearColor(0.f, 0.f, 0.f, .0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         renderer->draw(renderables);
+        imgui->Render();
         // Swap front and back buffers
         glfwSwapBuffers(window);
 

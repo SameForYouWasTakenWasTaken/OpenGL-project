@@ -1,5 +1,6 @@
 #include "Camera.hpp"
 
+
 Camera::Camera()
 : fovDeg(45.0f), nearPlane(0.1f), farPlane(500.0f),
 position({0,0,5}), front({0,0,-1}), up({0,1,0}),

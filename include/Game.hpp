@@ -10,6 +10,8 @@
 #include "Renderer.hpp"
 #include "Camera.hpp"
 
+#include "ImGUI/ImGui_Implement.hpp"
+
 template<typename... Args>
 void display_err_message(const Args&... msgs)
 {
@@ -21,6 +23,7 @@ class Game {
     GLFWwindow* window;
     Camera* camera;
     Renderer* renderer;
+    ImGui_Implement* imgui;
 
     std::vector<std::unique_ptr<Renderable>> renderables;
     unsigned int WIDTH;

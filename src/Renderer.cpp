@@ -1,5 +1,18 @@
 #include "Renderer.hpp"
 
+void Renderer::CommonDraw(Renderable* obj)
+{
+    if (!obj->available_shader()) 
+        obj->create_shaders();
+        
+        Shader* sh = obj->GetShader();
+        if (sh) {
+            uploadViewProjToShader(*sh);
+        }
+        obj->draw(GL_TRIANGLES); // this should set 'model' uniform (and any object-local uniforms)
+        obj->GetVAO()->Unbind(); // To solve confusion, and errors within draw functions, unbind VAO after no use needed
+}
+
 Renderer::Renderer(Camera* cam) : camera(cam) {}
 
 void Renderer::uploadViewProjToShader(Shader& shader) {
@@ -16,15 +29,25 @@ void Renderer::update_aspect_ratio(float width, float height) {
     }
 }
 
-void Renderer::draw(const std::vector<std::unique_ptr<Renderable>>& renderables) {
-    for (const auto& obj : renderables) {
-        if (!obj->available_shader()) 
-            obj->create_shaders();
-        
-        Shader* sh = obj->GetShader();
-        if (sh) {
-            uploadViewProjToShader(*sh);
-        }
-        obj->draw(GL_TRIANGLES); // this should set 'model' uniform (and any object-local uniforms)
+void Renderer::draw(std::vector<std::unique_ptr<Renderable>>& renderables) {
+    
+    // Add the cached renderables to the original renderables vector
+    if (dirty_renderables) {
+        for (auto& obj : cached_renderables)
+            renderables.push_back(std::move(obj));
+        cached_renderables.clear();    
     }
+    dirty_renderables = false;
+    
+    spdlog::info("{}, {}",renderables.size(), cached_renderables.size());
+
+    for (auto& obj : renderables)
+        CommonDraw(obj.get());
+}
+
+
+void Renderer::cache_draw(std::unique_ptr<Renderable> r)
+{
+    cached_renderables.push_back(std::move(r));
+    dirty_renderables = true;
 }

@@ -75,7 +75,7 @@ private:
         void SetScale(const glm::vec3& amnt);
         // Information functions
         std::pair<bool, bool> available_shader_sources(); // first : vertex, second : fragment
-        bool available_shader() {return !!shader;}
+        bool available_shader() {return shader->Available();}
         
         Shader* GetShader() { return shader.get(); }
         VAO* GetVAO() {return vao.get();}
@@ -89,6 +89,7 @@ private:
         {
             CommonDraw(); // By default, only runs CommonDraw, but you can change it how you want.
             glDrawElements(usage, indices.size(), GL_UNSIGNED_INT, 0);
+            // UNBINDING VAO IS HAPPENING IN THE RENDERER
         };
 
         virtual void BeforeDraw() = 0;
