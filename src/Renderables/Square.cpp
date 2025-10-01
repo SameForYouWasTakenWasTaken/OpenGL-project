@@ -76,6 +76,7 @@ Square::Square(float a, std::string& pathToShaderSource)
 
 void Square::draw(GLenum usage)
 {
+    //SetIndices(indices);
     CommonDraw();
     glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(indices.size()), GL_UNSIGNED_INT, 0);
 }

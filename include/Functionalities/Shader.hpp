@@ -54,7 +54,7 @@ inline ShaderSources ParseShaderFile(const std::string& path) {
 class Shader {
     GLuint vertexShader;
     GLuint fragmentShader;
-    void Create(const char* vertexPath, const char* fragmentPath)
+    void Create(const char* vertexSrc, const char* fragmentSrc)
     {
         // Create the program
         ID = glCreateProgram();
@@ -63,8 +63,8 @@ class Shader {
         fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
         
         // Add the vertex and fragment paths to the shaders
-        glShaderSource(vertexShader, 1, &vertexPath, nullptr);
-        glShaderSource(fragmentShader, 1, &fragmentPath, nullptr);
+        glShaderSource(vertexShader, 1, &vertexSrc, nullptr);
+        glShaderSource(fragmentShader, 1, &fragmentSrc, nullptr);
         // Compile the shaders
         glCompileShader(vertexShader);
         glCompileShader(fragmentShader);
@@ -110,9 +110,9 @@ public:
         locProjection = glGetUniformLocation(ID, "projection");
         locView = glGetUniformLocation(ID, "view");
     }
-    Shader(const char* vertexPath, const char* fragmentPath)
+    Shader(const char* vertexSrc, const char* fragmentSrc)
     {
-        Create(vertexPath, fragmentPath);
+        Create(vertexSrc, fragmentSrc);
     }
     void Use() 
     {
@@ -122,6 +122,19 @@ public:
     void Delete() 
     { 
         glDeleteProgram(ID); 
+    }
+    void Unuse()
+    {
+        glUseProgram(0);
+    }
+    bool Available()
+    {
+        if (ID > 0)
+        {
+            return true;
+        }
+
+        return false;
     }
     void Update(const char* vertexPath, const char* fragmentPath)
     {

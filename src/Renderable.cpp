@@ -25,6 +25,7 @@ Renderable::Renderable(const std::vector<Vertex> Vertices,
 
     vao->Unbind();
     vbo->Unbind();
+    ebo->Unbind();
 }
 
 void Renderable::LinkAttrib(VAOattrib& att)
@@ -158,8 +159,8 @@ void Renderable::CommonDraw()
 
     shader->Use();
     vao->Bind();
-
     UniformCalculations();
-
     BeforeDraw(); // Custom functionality if any other derived class wants to add its own cool twists :upside_down_face:
+    // vao->Unbind();
+    // shader->Unuse();
 }

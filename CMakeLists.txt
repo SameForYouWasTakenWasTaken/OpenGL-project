@@ -8,6 +8,15 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 file(GLOB_RECURSE SRC_FILES CONFIGURE_DEPENDS "${CMAKE_SOURCE_DIR}/src/*.cpp" "${CMAKE_SOURCE_DIR}/src/*.c")
 file(GLOB_RECURSE HEADER_FILES CONFIGURE_DEPENDS "${CMAKE_SOURCE_DIR}/include/*.h" "${CMAKE_SOURCE_DIR}/include/*.hpp")
 
+set(IMGUI_SRC
+    thirdparty/imgui/imgui.cpp
+    thirdparty/imgui/imgui_draw.cpp
+    thirdparty/imgui/imgui_tables.cpp
+    thirdparty/imgui/imgui_widgets.cpp
+    thirdparty/imgui/backends/imgui_impl_glfw.cpp
+    thirdparty/imgui/backends/imgui_impl_opengl3.cpp
+)
+
 include(FetchContent)
 
 # GLFW
@@ -16,7 +25,6 @@ FetchContent_Declare(
     GIT_REPOSITORY https://github.com/glfw/glfw.git
     GIT_TAG 3.4
 )
-
 # GLM
 FetchContent_Declare(
     glm
@@ -37,11 +45,24 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(glfw glm spdlog stb)
 
-# Add executable
-add_executable(main ${SRC_FILES} ${HEADER_FILES})
-target_include_directories(main PRIVATE "${CMAKE_SOURCE_DIR}/include")
-target_link_libraries(main PRIVATE glm::glm glfw spdlog::spdlog)
+# Add ImGui as static library
+add_subdirectory(thirdparty/imgui)
 
+# Add executable
+add_executable(main ${SRC_FILES} ${HEADER_FILES} ${IMGUI_SRC})
+
+# Include directories
+target_include_directories(main PRIVATE
+    "${CMAKE_SOURCE_DIR}/include"
+    "${CMAKE_SOURCE_DIR}/thirdparty/imgui"
+    "${CMAKE_SOURCE_DIR}/thirdparty/imgui/backends"
+    ${glfw_SOURCE_DIR}/include # THIS IS IMPORTANT for <GLFW/glfw3.h>
+)
+
+# Link libraries
+target_link_libraries(main PRIVATE glm::glm spdlog::spdlog glfw imgui)
+
+# Copy shaders after build
 add_custom_command(TARGET main POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
     "${CMAKE_SOURCE_DIR}/Shaders"

@@ -1,5 +1,6 @@
 #include "Camera.hpp"
 
+
 Camera::Camera()
 : fovDeg(45.0f), nearPlane(0.1f), farPlane(500.0f),
 position({0,0,5}), front({0,0,-1}), up({0,1,0}),
@@ -13,6 +14,27 @@ void Camera::setPerspective(float fov, float nearP, float farP) {
     fovDeg = fov;
     nearPlane = nearP;
     farPlane = farP;
+    dirtyProj = true;
+}
+
+void Camera::setFOV(float fovDeg) {
+    this->fovDeg = fovDeg;
+    dirtyProj = true;
+}
+
+void Camera::setNearPlane(float nearPlane) {
+    this->nearPlane = nearPlane;
+    dirtyProj = true;
+}
+
+void Camera::setFarPlane(float farPlane) {
+    this->farPlane = farPlane;
+    dirtyProj = true;
+}
+
+void Camera::setViewport(int width, int height) {
+    viewportWidth = width;
+    viewportHeight = height;
     dirtyProj = true;
 }
 
