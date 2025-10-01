@@ -1,5 +1,7 @@
 #include "Renderer.hpp"
 
+#include <iostream>
+
 void Renderer::CommonDraw(Renderable* obj)
 {
     if (!obj->available_shader()) 
@@ -29,25 +31,24 @@ void Renderer::update_aspect_ratio(float width, float height) {
     }
 }
 
-void Renderer::draw(std::vector<std::unique_ptr<Renderable>>& renderables) {
-    
-    // Add the cached renderables to the original renderables vector
-    if (dirty_renderables) {
-        for (auto& obj : cached_renderables)
-            renderables.push_back(std::move(obj));
-        cached_renderables.clear();    
-    }
-    dirty_renderables = false;
-    
-    spdlog::info("{}, {}",renderables.size(), cached_renderables.size());
-
-    for (auto& obj : renderables)
+void Renderer::draw() {
+    for(auto& obj : cached_renderables)
         CommonDraw(obj.get());
-}
+    for(auto& obj : sh_cached_renderables)
+        CommonDraw(obj.get());}
 
 
 void Renderer::cache_draw(std::unique_ptr<Renderable> r)
 {
     cached_renderables.push_back(std::move(r));
-    dirty_renderables = true;
+}
+
+void Renderer::cache_share_renderable(std::shared_ptr<Renderable> renderable)
+{
+    sh_cached_renderables.push_back(renderable);
+}
+
+void Renderer::ChangeCamera(Camera* newCam)
+{
+    camera = newCam;
 }

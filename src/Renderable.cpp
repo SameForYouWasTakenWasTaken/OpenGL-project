@@ -8,8 +8,8 @@ void Renderable::CacheUniformLocations()
 
 Renderable::Renderable(const std::vector<Vertex> Vertices,
                        const std::vector<GLuint> Indices,
-                       const std::vector<VAOattrib> attrib)
-: vertices(std::move(Vertices)), indices(std::move(Indices))
+                       const std::vector<VAOattrib> attributes)
+: vertices(std::move(Vertices)), indices(std::move(Indices)), attrib(attrib)
 {
     vao = std::make_unique<VAO>();    
     vbo = std::make_unique<VBO>(vertices);
@@ -106,6 +106,17 @@ void Renderable::update_shaders(const std::string& frag_src, const std::string& 
 void Renderable::SetPosition(const glm::vec3& newPos)
 {
     position = newPos;
+}
+
+void Renderable::SetColor(const glm::vec3& col)
+{
+    for (Vertex& v : vertices){
+        v.color = col;
+    }
+    vbo->Bind();
+    glBufferSubData(GL_ARRAY_BUFFER, 0, vertices.size() * sizeof(Vertex), vertices.data());
+    vbo->Unbind();
+
 }
 
 void Renderable::Move(glm::vec3 pos)

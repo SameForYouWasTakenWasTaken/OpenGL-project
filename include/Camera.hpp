@@ -4,10 +4,6 @@
 
 class Camera {
 private:
-// perspective params
-float fovDeg;
-float nearPlane;
-float farPlane;
 
 
 // camera transform
@@ -17,9 +13,7 @@ glm::vec3 up;
 glm::vec3 right;
 glm::vec3 worldUp;
 
-float yaw;   // horizontal rotation (around Y)
-float pitch; // vertical rotation (around X)
-float fov;   // for perspective
+
 int viewportWidth, viewportHeight;
 
 // cache
@@ -34,6 +28,15 @@ void rebuildView();
 void updateVectors();
 
 public:
+// perspective params
+float fovDeg;
+float nearPlane;
+float farPlane;
+
+float yaw;   // horizontal rotation (around Y)
+float pitch; // vertical rotation (around X)
+float fov;   // for perspective
+
 Camera();
 
 

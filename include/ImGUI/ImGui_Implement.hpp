@@ -5,11 +5,15 @@
 
 #include "Renderer.hpp"
 #include "Renderables/Triangle.hpp"
+#include "Renderables/Square.hpp"
 #include "Renderables/Circle.hpp"
 
 class ImGui_Implement {
     bool active = true;
     Renderer* renderer = nullptr; // not owning
+
+    mutable std::vector<std::shared_ptr<Renderable>> renderables; // Keeps track of the objects you created within ImGui
+    mutable bool dirty_renderables = false;
 public:
     ~ImGui_Implement()
     {

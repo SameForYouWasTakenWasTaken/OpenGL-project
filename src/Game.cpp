@@ -38,8 +38,9 @@ bool Game::init(int width, int height){
         return false;
     }
     glfwMakeContextCurrent(window);
-    // glfwSwapInterval(1); // VSync
-
+    //glfwSwapInterval(1); // VSync
+    glfwSwapInterval(0); // No sync
+    
 
     // Set callbacks    
     glfwSetErrorCallback(error_callback);
@@ -154,13 +155,14 @@ void Game::run() {
     obj3->SetScale({2.f,2.f,2.f});
 
     // Now push it into the vector
-    renderables.push_back(std::move(obj3));
-    renderables.push_back(std::move(obj));
-    renderables.push_back(std::move(obj2));
+    renderer->cache_draw(std::move(obj3));
+    renderer->cache_draw(std::move(obj));
+    renderer->cache_draw(std::move(obj2));
 
     // Main loop
     double lastFrame = glfwGetTime();
     camera->lookAtTarget({0,0,0});
+    camera->setFOV(90);
     while(!glfwWindowShouldClose(window)) {
         double currentFrame = glfwGetTime();
         float deltaTime = static_cast<float>(currentFrame - lastFrame);
@@ -171,7 +173,7 @@ void Game::run() {
         glClearColor(0.f, 0.f, 0.f, .0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        renderer->draw(renderables);
+        renderer->draw();
         imgui->Render();
         // Swap front and back buffers
         glfwSwapBuffers(window);
@@ -205,9 +207,12 @@ void Game::update(float dt)
     camera->Rotate(rot);
 
     if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS) {
-        for (auto& renderable : renderables) {
+        for (auto& renderable : renderer->GetAllRenderables()) {
             renderable->Rotate(50 * dt, ROTATION::NORTH);
         }
+    } else if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS)
+    {
+        spdlog::info("{}", renderer->GetAllRenderables().size());
     }
     
 }

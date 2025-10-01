@@ -98,7 +98,7 @@ void Camera::updateVectors() {
 
 
     right = glm::normalize(glm::cross(front, worldUp));
-    up    = glm::normalize(glm::cross(right, front));
+    up = glm::normalize(glm::cross(right, front));
 
 
 }
@@ -110,7 +110,7 @@ void Camera::Move(const glm::vec3& delta) {
 
 void Camera::Rotate(const glm::vec3& rotationDelta) {
     pitch += rotationDelta.x;
-    yaw   += rotationDelta.y;
+    yaw += rotationDelta.y;
 
 
     if (pitch > 89.0f) pitch = 89.0f;
@@ -118,8 +118,6 @@ void Camera::Rotate(const glm::vec3& rotationDelta) {
 
     updateVectors();
     dirtyView = true;
-
-
 }
 
 void Camera::setAspectRatio(float aspect) {

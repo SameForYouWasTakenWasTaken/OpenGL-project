@@ -11,6 +11,7 @@ public:
     Square(std::vector<Vertex>& corner_points, std::vector<GLuint>& indices, std::string& pathToShaderSource);
     Square(float a, std::string& pathToShaderSource); // Function creates a square with each side length of a
     Square(float a, float b, std::string& pathToShaderSource); // Function creates a rectangle with width a and height b
+    Square(float a, float b, float c, std::string& pathToShaderSource); // Function creates a rectangle with width a and height b
 
     void BeforeDraw() override {};
     void update(float dt) override {};
