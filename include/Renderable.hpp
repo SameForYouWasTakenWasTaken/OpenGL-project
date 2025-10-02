@@ -51,12 +51,13 @@ private:
     glm::vec3 scale    = {1,1,1}; // Default on all sides. 0,0,0 makes it practically.. Not there. 2,2,2 is double the size, for example
 
     glm::mat4 model = glm::mat4(1.f);
+    std::vector<VAOattrib> attrib;
     
     void UniformCalculations(); // Keep it organized
     public:
     Renderable(std::vector<Vertex> Vertices,
         std::vector<GLuint> Indices = {0, 1, 2},
-        std::vector<VAOattrib> attrib = {});
+        std::vector<VAOattrib> attributes = {});
         virtual ~Renderable() = default;
         
         // Construction functions
@@ -73,6 +74,7 @@ private:
         void Move(glm::vec3 pos);
         void Rotate(float degrees, ROTATION rotation_direction);
         void SetScale(const glm::vec3& amnt);
+        void SetColor(const glm::vec3& col);
         // Information functions
         std::pair<bool, bool> available_shader_sources(); // first : vertex, second : fragment
         bool available_shader() {return shader->Available();}

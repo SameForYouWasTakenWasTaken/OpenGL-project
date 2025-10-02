@@ -15,11 +15,16 @@ public:
     template<typename T>
     VBO(const std::vector<T>& data, GLenum usage = GL_STATIC_DRAW)
     {
-        glGenBuffers(1, &ID);
+        Create(data, usage);
+    }
+    void Create(const std::vector<Vertex>& vertices, GLenum usage = GL_STATIC_DRAW)
+    {
+        glDeleteBuffers(1, &ID); // Delete
+        glGenBuffers(1, &ID); // Recreate
         glBindBuffer(GL_ARRAY_BUFFER, ID);
         glBufferData(GL_ARRAY_BUFFER,
-                     data.size() * sizeof(T),
-                     data.data(),
+                     vertices.size() * sizeof(Vertex),
+                     vertices.data(),
                      usage);
     }
     ~VBO()

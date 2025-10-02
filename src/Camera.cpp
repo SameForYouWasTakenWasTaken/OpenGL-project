@@ -1,13 +1,12 @@
 #include "Camera.hpp"
 
-
 Camera::Camera()
 : fovDeg(45.0f), nearPlane(0.1f), farPlane(500.0f),
 position({0,0,5}), front({0,0,-1}), up({0,1,0}),
 worldUp({0,1,0}),
 yaw(-90.0f), pitch(0.0f), fov(45.0f),
 viewportWidth(800), viewportHeight(600),
-dirtyView(true), dirtyProj(true)
+dirtyView(true), dirtyProj(true), sensitivity(0.5f)
 {}
 
 void Camera::setPerspective(float fov, float nearP, float farP) {
@@ -42,6 +41,44 @@ void Camera::setPosition(const glm::vec3& pos) {
     position = pos;
     dirtyView = true;
 }
+
+void Camera::mousePosCallback(GLFWwindow* window, double xpos, double ypos) {
+    if (!cursor_movement) 
+    {
+        lastMouseX = xpos;
+        lastMouseY = ypos;
+        return;
+    };
+
+    if (firstMouseInput) {
+        lastMouseX = xpos;
+        lastMouseY = ypos;
+        firstMouseInput = false; // reset after first alignment
+        return;
+    }
+
+    float xoffset = xpos - lastMouseX;
+    float yoffset = lastMouseY - ypos; // reversed since y-coords go top->down
+
+    lastMouseX = xpos;
+    lastMouseY = ypos;
+
+    xoffset *= sensitivity;
+    yoffset *= sensitivity;
+
+    yaw   += xoffset;
+    pitch += yoffset;
+
+    if (pitch > 89.0f) pitch = 89.0f;
+    if (pitch < -89.0f) pitch = -89.0f;
+
+    glm::vec3 _front;
+    _front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+    _front.y = sin(glm::radians(pitch));
+    _front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+    front = glm::normalize(_front);
+}
+
 
 void Camera::lookAtTarget(const glm::vec3& target, const glm::vec3& upHint) {
     worldUp = upHint;
@@ -98,7 +135,7 @@ void Camera::updateVectors() {
 
 
     right = glm::normalize(glm::cross(front, worldUp));
-    up    = glm::normalize(glm::cross(right, front));
+    up = glm::normalize(glm::cross(right, front));
 
 
 }
@@ -108,9 +145,14 @@ void Camera::Move(const glm::vec3& delta) {
     dirtyView = true;
 }
 
+void Camera::setSensitivty(float sens)
+{
+    sensitivity = sens;
+}
+
 void Camera::Rotate(const glm::vec3& rotationDelta) {
     pitch += rotationDelta.x;
-    yaw   += rotationDelta.y;
+    yaw += rotationDelta.y;
 
 
     if (pitch > 89.0f) pitch = 89.0f;
@@ -118,8 +160,6 @@ void Camera::Rotate(const glm::vec3& rotationDelta) {
 
     updateVectors();
     dirtyView = true;
-
-
 }
 
 void Camera::setAspectRatio(float aspect) {

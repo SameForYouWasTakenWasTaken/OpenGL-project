@@ -38,8 +38,9 @@ bool Game::init(int width, int height){
         return false;
     }
     glfwMakeContextCurrent(window);
-    // glfwSwapInterval(1); // VSync
-
+    //glfwSwapInterval(1); // VSync
+    glfwSwapInterval(0); // No sync
+    
 
     // Set callbacks    
     glfwSetErrorCallback(error_callback);
@@ -76,10 +77,20 @@ bool Game::init(int width, int height){
     return true;
 }
 
+void Game::mousePosCallback(GLFWwindow* window, double xpos, double ypos) {
+    ImGui_ImplGlfw_CursorPosCallback(window, xpos, ypos); // forward to ImGui
+    Game* game = reinterpret_cast<Game*>(glfwGetWindowUserPointer(window));
+    if (game && game->camera) {
+        game->camera->mousePosCallback(window, xpos, ypos);
+    }
+}
+
 void Game::run() {
     camera = new Camera();
     renderer = new Renderer(camera);
     imgui->AssignRenderer(renderer);
+
+    glfwSetCursorPosCallback(window, mousePosCallback);
 
     std::vector<Vertex> triangle_vertices = {
         {{-0.5f, -0.5f, 0.0f}, {1.5f, 0.2f, 0.3f}}, // Bottom left
@@ -154,13 +165,14 @@ void Game::run() {
     obj3->SetScale({2.f,2.f,2.f});
 
     // Now push it into the vector
-    renderables.push_back(std::move(obj3));
-    renderables.push_back(std::move(obj));
-    renderables.push_back(std::move(obj2));
+    renderer->cache_draw(std::move(obj3));
+    renderer->cache_draw(std::move(obj));
+    renderer->cache_draw(std::move(obj2));
 
     // Main loop
     double lastFrame = glfwGetTime();
     camera->lookAtTarget({0,0,0});
+    camera->setFOV(90);
     while(!glfwWindowShouldClose(window)) {
         double currentFrame = glfwGetTime();
         float deltaTime = static_cast<float>(currentFrame - lastFrame);
@@ -171,7 +183,7 @@ void Game::run() {
         glClearColor(0.f, 0.f, 0.f, .0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        renderer->draw(renderables);
+        renderer->draw();
         imgui->Render();
         // Swap front and back buffers
         glfwSwapBuffers(window);
@@ -195,19 +207,26 @@ void Game::update(float dt)
     if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) move.y -= speed;
     if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS) move.y += speed;
 
-    // Rotation
-    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) rot.x += rot_speed;
-    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) rot.x -= rot_speed;
-    if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) rot.y += rot_speed;
-    if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) rot.y -= rot_speed;
+    // Rotation with mouse
+    if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS) {
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); // Disable mouse cursor
+        camera->ActivateCursorMovement();
+        
+    }else if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_RELEASE) {
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL); // Enable mouse cursor
+        camera->DeactivateCursorMovement();
+    }
 
     camera->Move(move);
     camera->Rotate(rot);
 
     if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS) {
-        for (auto& renderable : renderables) {
+        for (auto& renderable : renderer->GetAllRenderables()) {
             renderable->Rotate(50 * dt, ROTATION::NORTH);
         }
+    } else if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS)
+    {
+        spdlog::info("{}", renderer->GetAllRenderables().size());
     }
     
 }

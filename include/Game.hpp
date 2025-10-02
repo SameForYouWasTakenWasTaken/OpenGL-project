@@ -45,6 +45,7 @@ class Game {
     }
     
     void onResize(int width, int height);
+    static void mousePosCallback(GLFWwindow* window, double xpos, double ypos);
 public:
 
     bool init(int width, int height);

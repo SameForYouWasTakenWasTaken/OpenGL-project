@@ -3,7 +3,7 @@
 
 class Triangle : public Renderable {
     public:
-    Triangle(std::vector<Vertex>& corner_points, std::string& pathToShaderSource);
+    Triangle(std::vector<Vertex>& vertices, std::string& pathToShaderSource);
     
     void BeforeDraw() override;
     

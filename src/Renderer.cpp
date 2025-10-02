@@ -1,5 +1,7 @@
 #include "Renderer.hpp"
 
+#include <iostream>
+
 void Renderer::CommonDraw(Renderable* obj)
 {
     if (!obj->available_shader()) 
@@ -10,7 +12,7 @@ void Renderer::CommonDraw(Renderable* obj)
             uploadViewProjToShader(*sh);
         }
         obj->draw(GL_TRIANGLES); // this should set 'model' uniform (and any object-local uniforms)
-        obj->GetVAO()->Unbind(); // To solve confusion, and errors within draw functions, unbind VAO after no use needed
+        obj->GetVAO()->Unbind(); // To solve confusion, and errors within draw functions, unbind VAO after no use needed. This does not mean you 'should' unbind VAO yourself, it's purely automatic, that is what I'm hoping to achieve with the VAO, VBO and EBO system. Should be purely automatic, no need to worry about it :)
 }
 
 Renderer::Renderer(Camera* cam) : camera(cam) {}
@@ -29,25 +31,24 @@ void Renderer::update_aspect_ratio(float width, float height) {
     }
 }
 
-void Renderer::draw(std::vector<std::unique_ptr<Renderable>>& renderables) {
-    
-    // Add the cached renderables to the original renderables vector
-    if (dirty_renderables) {
-        for (auto& obj : cached_renderables)
-            renderables.push_back(std::move(obj));
-        cached_renderables.clear();    
-    }
-    dirty_renderables = false;
-    
-    spdlog::info("{}, {}",renderables.size(), cached_renderables.size());
-
-    for (auto& obj : renderables)
+void Renderer::draw() {
+    for(auto& obj : cached_renderables)
         CommonDraw(obj.get());
-}
+    for(auto& obj : sh_cached_renderables)
+        CommonDraw(obj.get());}
 
 
 void Renderer::cache_draw(std::unique_ptr<Renderable> r)
 {
     cached_renderables.push_back(std::move(r));
-    dirty_renderables = true;
+}
+
+void Renderer::cache_share_renderable(std::shared_ptr<Renderable> renderable)
+{
+    sh_cached_renderables.push_back(renderable);
+}
+
+void Renderer::ChangeCamera(Camera* newCam)
+{
+    camera = newCam;
 }

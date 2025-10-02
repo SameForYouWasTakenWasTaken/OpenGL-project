@@ -27,48 +27,156 @@ void ImGui_Implement::NewFrame() {
     ImGui::NewFrame();
 
     // Example window
+    ImGuiIO& io = ImGui::GetIO();
+    ImGui::Begin("Debug menu!");
+    ImGui::SameLine();
+    // Item spawning
     {
-        ImGuiIO& io = ImGui::GetIO();
-        static float f = 0.0f;
-        static int counter = 0;
-        static float pos[3];
-        ImGui::Begin("Hello, world!");
-        ImGui::Text("This is some useful text.");
-        ImGui::SliderFloat("float", &f, 0.0f, 1.0f);
-        ImGui::InputFloat3("Position", pos, "%.f");
-        
-        if (ImGui::Button("Press me to create me!") && renderer)
-        {
-            std::vector<Vertex> triangle_vertices = {
-                 {{-0.5f, -0.5f, 0.0f}, {1.5f, 0.2f, 0.3f}}, // Bottom left
-                 {{0.5f, -0.5f, 0.0f}, {1.f, 0.779f, 0.6f}}, // Bottom right
-                 {{0.0f,  0.5f, 0.0f}, {1.1f, 0.3f, 0.9f}}, // Top center
-                 {{0.0f,  0.0f, 1.0f}, {0.5f, 0.1f, 0.3f}} // Z axis
-             };
-             std::vector<unsigned int> triangle_indices = {
-                 0, 1, 2, // base
-                 0, 3, 1, // side
-                 1, 3, 2, // side
-                 2, 0, 3  // side
-             };
-             std::string path = "Shaders/Testing/standard.glsl";
-             auto t = std::make_unique<Circle>(2.5, 64, path);
-             t->SetPosition({pos[0], pos[1], pos[2]});
-             spdlog::info("{}, {}, {}", pos[0], pos[1], pos[2]);
-
-             renderer->cache_draw(std::move(t));
-        }
+        const char* items[] = { "Triangle", "Circle", "Square" };
+        static float col[3] = {1.f, 1.f, 1.f};
+        static float pos[3] = {0.f, 0.f, 0.f};
+        static float scale = 1.0f;
+        static std::string p = "Shaders/Testing/standard.glsl";
+        static int item_current = 1;
+        // Simple selection popup (if you want to show the current selection inside the Button itself,
+        // you may want to build a string using the "###" operator to preserve a constant ID with a variable label)
+        if (ImGui::Button("Select object!"))
+            ImGui::OpenPopup("my_select_popup");
         ImGui::SameLine();
-        ImGui::Text("counter = %d", counter);
-        ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
-        ImGui::End();
+        ImGui::TextUnformatted(item_current == -1 ? "<None>" : items[item_current]);
+        if (ImGui::BeginPopup("my_select_popup"))
+        {
+            ImGui::SeparatorText("Shapes");
+            for (int i = 0; i < IM_ARRAYSIZE(items); i++)
+                if (ImGui::Selectable(items[i]))
+                    item_current = i;
+            ImGui::EndPopup();
+        }
+        if (item_current >= 0)
+        {
+            ImGui::ColorEdit3("Pick a color!", col);
+            ImGui::SliderFloat("Scale", &scale, 1.0f, 10.0f);
+            ImGui::InputFloat3("Position", pos, "%.f");
+            ImGui::SeparatorText("Object Functionality");
+        }
+        if (item_current == 0) // Triangle
+        {
+            static float bottom_left = -0.5f;
+            static float bottom_right = 0.5f;
+            static float top_center = 0.0f;
+            static float bottom_center = -.5f;
+            static float z_axis = 0.0f;
+            static float max = 10;
+            ImGui::SliderFloat("Bottom left", &bottom_left, -max, max);
+            ImGui::SliderFloat("Bottom right", &bottom_right, -max, max);
+            ImGui::SliderFloat("Top center", &top_center, -max, max);
+            ImGui::SliderFloat("Bottom center", &bottom_center, -max, max);
+            ImGui::SliderFloat("Z axis", &z_axis, -max, max);
+
+            std::vector<Vertex> vertices = {
+                {{bottom_left, bottom_center, 0.0f}}, // Bottom left
+                {{bottom_right, bottom_center, 0.0f}}, // Bottom right
+                {{0.0f,  top_center, 0.0f}}, // Top center
+                {{0.0f,  0.0f, z_axis}} // Z axis
+            };
+            std::vector<unsigned int> indices = {
+                0, 1, 2, // base
+                0, 3, 1, // side
+                1, 3, 2, // side
+                2, 0, 3  // side
+            };
+            if (renderer)
+            {
+                if (ImGui::Button("Run me!"))
+                {
+                    auto t = std::make_shared<Triangle>(vertices, p);
+                    t->SetPosition({pos[0], pos[1], pos[2]});
+                    t->SetColor({col[0], col[1], col[2]});
+                    t->SetScale({scale, scale, scale});
+                    t->SetIndices(indices);
+                    renderer->cache_share_renderable(t);
+                    renderables.push_back(t);
+                }
+            }
+        } else if (item_current == 1) // Circle
+        {
+            if (renderer)
+            {
+                static float radius = 1.0f;
+                ImGui::SliderFloat("Radius", &radius, 1.0f, 10.0f, "%.2f");
+                if (ImGui::Button("Run me!"))
+                {
+                    auto c = std::make_shared<Circle>(radius, 32, p);
+                    c->SetPosition({pos[0], pos[1], pos[2]});
+                    c->SetColor({col[0], col[1], col[2]});
+                    c->SetScale({scale, scale, scale});
+                    renderer->cache_share_renderable(c);
+                    renderables.push_back(c);
+                }
+            }
+        } else if (item_current == 2) // Square
+        {
+            static float width = 1.f;
+            static float height = 1.f;
+            static float depth = 1.f;
+            ImGui::InputFloat("Width", &width);
+            ImGui::InputFloat("Height", &height);
+            ImGui::InputFloat("Depth", &depth);
+            if (renderer)
+            {
+                if (ImGui::Button("Run me!"))
+                {
+                    auto s = std::make_shared<Square>(width, height, depth, p);
+                    s->SetPosition({pos[0], pos[1], pos[2]});
+                    s->SetColor({col[0], col[1], col[2]});
+                    s->SetScale({scale, scale, scale});
+                    renderer->cache_share_renderable(s);
+                    renderables.push_back(s);
+                }
+            }
+        }
     }
+    
+    ImGui::SeparatorText("Camera settings");
+    // Camera
+    {
+        if (!renderer->GetCamera()) return;
+        static bool dirty_fov = false;
+        static bool dirty_near = false;
+        static bool dirty_far = false;
+        static bool dirty_sens = false;
+        static bool dirty_speed = false;
+        float fov = renderer->GetCamera()->fovDeg;
+        float near = renderer->GetCamera()->nearPlane;
+        float far = renderer->GetCamera()->farPlane;
+        float sensitivity = renderer->GetCamera()->sensitivity;        
+
+        ImGui::SeparatorText("Camera");
+        dirty_fov = ImGui::SliderFloat("FOV", &fov, 1.0f, 180.0f);
+        dirty_near = ImGui::SliderFloat("Near plane", &near, 0.1f, 10.0f);
+        dirty_far = ImGui::SliderFloat("Far plane", &far, 10.0f, 1000.0f);
+        dirty_sens = ImGui::SliderFloat("Sensitivity", &sensitivity, 0.0f, 10.0f);
+        if (dirty_fov)
+            renderer->GetCamera()->setFOV(fov);
+        if (dirty_near)
+            renderer->GetCamera()->setNearPlane(near);
+        if (dirty_far)
+            renderer->GetCamera()->setFarPlane(far);
+        if (dirty_sens)
+            renderer->GetCamera()->setSensitivty(sensitivity);
+        
+    }
+    
+    ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
+    ImGui::End();
+    //ImGui::ShowDemoWindow();
 }
 
 void ImGui_Implement::Render() {
     if (!active) return;
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
 }
 
 void ImGui_Implement::Shutdown() {

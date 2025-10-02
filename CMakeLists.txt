@@ -13,9 +13,12 @@ set(IMGUI_SRC
     thirdparty/imgui/imgui_draw.cpp
     thirdparty/imgui/imgui_tables.cpp
     thirdparty/imgui/imgui_widgets.cpp
+    thirdparty/imgui/imgui_demo.cpp
     thirdparty/imgui/backends/imgui_impl_glfw.cpp
     thirdparty/imgui/backends/imgui_impl_opengl3.cpp
 )
+
+set(CMAKE_BUILD_TYPE Debug)
 
 include(FetchContent)
 
