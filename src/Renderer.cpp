@@ -12,7 +12,7 @@ void Renderer::CommonDraw(Renderable* obj)
             uploadViewProjToShader(*sh);
         }
         obj->draw(GL_TRIANGLES); // this should set 'model' uniform (and any object-local uniforms)
-        obj->GetVAO()->Unbind(); // To solve confusion, and errors within draw functions, unbind VAO after no use needed
+        obj->GetVAO()->Unbind(); // To solve confusion, and errors within draw functions, unbind VAO after no use needed. This does not mean you 'should' unbind VAO yourself, it's purely automatic, that is what I'm hoping to achieve with the VAO, VBO and EBO system. Should be purely automatic, no need to worry about it :)
 }
 
 Renderer::Renderer(Camera* cam) : camera(cam) {}

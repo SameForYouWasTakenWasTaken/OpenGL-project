@@ -17,8 +17,10 @@ public:
     
     void update_aspect_ratio(float width, float height);
     void ChangeCamera(Camera* newCam);
+    void setNearPlane(float nearPlane);
+    void setFarPlane(float farPlane);
 
-    const Camera* GetCamera() const {return camera;}
+    Camera* GetCamera() {return camera;}
     std::vector<Renderable*> GetAllRenderables() {
         std::vector<Renderable*> renderables;
         for (auto& r : cached_renderables) {
