@@ -1,0 +1,14 @@
+{
+	"InstallScripts" : 
+	[
+		"D:/dev/Development/c++/Making a game in OpenGL/build/cmake_install.cmake",
+		"D:/dev/Development/c++/Making a game in OpenGL/build/_deps/glfw-build/cmake_install.cmake",
+		"D:/dev/Development/c++/Making a game in OpenGL/build/_deps/glfw-build/src/cmake_install.cmake",
+		"D:/dev/Development/c++/Making a game in OpenGL/build/_deps/glfw-build/docs/cmake_install.cmake",
+		"D:/dev/Development/c++/Making a game in OpenGL/build/_deps/glm-build/cmake_install.cmake",
+		"D:/dev/Development/c++/Making a game in OpenGL/build/_deps/glm-build/glm/cmake_install.cmake",
+		"D:/dev/Development/c++/Making a game in OpenGL/build/_deps/spdlog-build/cmake_install.cmake",
+		"D:/dev/Development/c++/Making a game in OpenGL/build/thirdparty/imgui/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

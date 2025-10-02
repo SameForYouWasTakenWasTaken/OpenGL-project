@@ -1,0 +1,3 @@
+D:/dev/Development/c++/Making a game in OpenGL/build/_deps/stb-subbuild/CMakeFiles/stb-populate.dir
+D:/dev/Development/c++/Making a game in OpenGL/build/_deps/stb-subbuild/CMakeFiles/edit_cache.dir
+D:/dev/Development/c++/Making a game in OpenGL/build/_deps/stb-subbuild/CMakeFiles/rebuild_cache.dir

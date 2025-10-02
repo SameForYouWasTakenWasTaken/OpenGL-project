@@ -1,0 +1,3 @@
+D:/dev/Development/c++/Making a game in OpenGL/build/_deps/glfw-subbuild/CMakeFiles/glfw-populate.dir
+D:/dev/Development/c++/Making a game in OpenGL/build/_deps/glfw-subbuild/CMakeFiles/edit_cache.dir
+D:/dev/Development/c++/Making a game in OpenGL/build/_deps/glfw-subbuild/CMakeFiles/rebuild_cache.dir

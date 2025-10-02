@@ -11,7 +11,6 @@
 #include "Camera.hpp"
 
 #include "ImGUI/ImGui_Implement.hpp"
-
 template<typename... Args>
 void display_err_message(const Args&... msgs)
 {
@@ -47,7 +46,6 @@ class Game {
     void onResize(int width, int height);
     static void mousePosCallback(GLFWwindow* window, double xpos, double ypos);
 public:
-
     bool init(int width, int height);
     void run();
     void update(float dt);

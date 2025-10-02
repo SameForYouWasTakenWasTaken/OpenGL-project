@@ -32,7 +32,7 @@ bool Game::init(int width, int height){
 
     // Create a windowed mode window and its OpenGL context, alongside ImGui
     float main_scale = ImGui_ImplGlfw_GetContentScaleForMonitor(glfwGetPrimaryMonitor());
-    window = glfwCreateWindow(width, height, "OpenGL Window", nullptr, nullptr);
+    window = glfwCreateWindow(width, height, "OpenGL window", nullptr, nullptr);
     if(!window) {
         glfwTerminate();
         return false;

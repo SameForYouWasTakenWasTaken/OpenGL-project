@@ -10,7 +10,6 @@
 #include <glm/gtc/matrix_transform.hpp> // for glm::translate, glm::rotate, glm::scale
 #include <glm/gtc/type_ptr.hpp>         // for glm::value_ptr
 
-
 #include "Functionalities/EBO.hpp"
 #include "Functionalities/VAO.hpp"
 #include "Functionalities/VBO.hpp"
