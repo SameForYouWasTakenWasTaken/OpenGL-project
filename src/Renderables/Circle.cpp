@@ -1,4 +1,5 @@
 #include "Renderables/Circle.hpp"
+#include "Renderables/Triangle.hpp"
 
 #define PI 3.14159265358979323846 
 
@@ -19,7 +20,7 @@ std::vector<Vertex> Create(float radius, const glm::vec3& position, size_t iter_
 }
 
 Circle::Circle(float r, size_t iter_num, std::string& pathToShaderFile)
-: radius(r), Renderable(Create(r, position, iter_num))
+: radius(r), Renderable(Create(r, {0,0,0}, iter_num))
 {
     auto ShaderSources = ParseShaderFile(pathToShaderFile);
 

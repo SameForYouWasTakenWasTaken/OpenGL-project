@@ -94,6 +94,12 @@ Square::Square(std::vector<Vertex>& corner_points, std::vector<GLuint>& indices,
 
     set_shader_sources(ShaderSources.FragmentSource, ShaderSources.VertexSource);
     create_shaders();
+
+	std::vector<Vertex> triangle_vertices = {
+		{{-0.5f, -0.5f, 0.0f}, {1.5f, 0.2f, 0.3f}}, // Bottom left
+		{{0.5f, -0.5f, 0.0f}, {1.f, 0.779f, 0.6f}}, // Bottom right
+		{{0.0f,  0.5f, 0.0f}, {1.1f, 0.3f, 0.9f}}, // Top center
+	};
 }
 Square::Square(float a, float b, std::string& pathToShaderSource)
 
@@ -140,4 +146,5 @@ void Square::draw(GLenum usage)
     //SetIndices(indices);
     CommonDraw();
     glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(indices.size()), GL_UNSIGNED_INT, 0);
+    GetVAO()->Unbind();
 }

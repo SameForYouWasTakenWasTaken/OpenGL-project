@@ -2,6 +2,7 @@
 #include <glad/glad.h>
 
 #include "Renderable.hpp"
+#include "Renderables/Triangle.hpp"
 
 static std::vector<Vertex> Create(size_t iter_num);
 

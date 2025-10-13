@@ -1,11 +1,11 @@
 #pragma once
 #include "Renderable.hpp"
+#include "Renderables/Triangle.hpp"
 
 // Can also be used as a rectangle! :)
 class Square : public Renderable
 {
 private:
-
 
 public:
     Square(std::vector<Vertex>& corner_points, std::vector<GLuint>& indices, std::string& pathToShaderSource);

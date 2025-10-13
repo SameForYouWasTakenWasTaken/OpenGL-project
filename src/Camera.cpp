@@ -93,7 +93,7 @@ void Camera::setDirection(const glm::vec3& forward, const glm::vec3& upHint) {
     front = glm::normalize(forward);
     worldUp = upHint;
     right = glm::normalize(glm::cross(front, worldUp));
-    up    = glm::normalize(glm::cross(right, front));
+    up = glm::normalize(glm::cross(right, front));
     yaw = glm::degrees(atan2(front.z, front.x));
     pitch = glm::degrees(asin(glm::clamp(front.y, -1.0f, 1.0f)));
     dirtyView = true;

@@ -151,7 +151,7 @@ void Game::run() {
 
 
     std::string standard_shader_path = "Shaders/Testing/standard.glsl";
-    auto obj = std::make_unique<Circle>(5.f, 8, standard_shader_path);
+    auto obj = std::make_unique<Circle>(5.f, 64, standard_shader_path);
     obj->SetPosition({0.f, 0.f, 0.f});
     obj->SetScale({1.f, 1.f, 3.f});
 

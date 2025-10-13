@@ -146,16 +146,22 @@ void ImGui_Implement::NewFrame() {
         static bool dirty_far = false;
         static bool dirty_sens = false;
         static bool dirty_speed = false;
+        static bool dirty_lookAt = false;
+
         float fov = renderer->GetCamera()->fovDeg;
         float near = renderer->GetCamera()->nearPlane;
         float far = renderer->GetCamera()->farPlane;
-        float sensitivity = renderer->GetCamera()->sensitivity;        
+        float sensitivity = renderer->GetCamera()->sensitivity;     
+        
+        static float lookAt[3];
 
         ImGui::SeparatorText("Camera");
         dirty_fov = ImGui::SliderFloat("FOV", &fov, 1.0f, 180.0f);
         dirty_near = ImGui::SliderFloat("Near plane", &near, 0.1f, 10.0f);
         dirty_far = ImGui::SliderFloat("Far plane", &far, 10.0f, 1000.0f);
         dirty_sens = ImGui::SliderFloat("Sensitivity", &sensitivity, 0.0f, 10.0f);
+        dirty_lookAt = ImGui::InputFloat3("LookAt position", lookAt);
+
         if (dirty_fov)
             renderer->GetCamera()->setFOV(fov);
         if (dirty_near)
@@ -164,7 +170,8 @@ void ImGui_Implement::NewFrame() {
             renderer->GetCamera()->setFarPlane(far);
         if (dirty_sens)
             renderer->GetCamera()->setSensitivty(sensitivity);
-        
+        if (dirty_lookAt)
+            renderer->GetCamera()->lookAtTarget(glm::vec3(lookAt[0], lookAt[1], lookAt[2]));
     }
     
     ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
