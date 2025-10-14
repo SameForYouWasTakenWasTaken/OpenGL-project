@@ -119,6 +119,11 @@ void Renderable::SetColor(const glm::vec4& col)
 
 }
 
+void Renderable::SetOrigin(const glm::vec3& orig)
+{
+    origin = orig;
+}
+
 void Renderable::Move(glm::vec3 pos)
 {
     position += pos;
@@ -148,15 +153,21 @@ void Renderable::SetScale(const glm::vec3& amnt)
 void Renderable::UniformCalculations()
 {
     model = glm::mat4(1.f);
-    model = glm::translate(model, position); // Set position
 
+    model = glm::translate(model, -origin); // Set origin, default 0,0,0
     // Rotate based on the rotation vec3
     model = glm::rotate(model, glm::radians(rotation.x), glm::vec3(1,0,0));
     model = glm::rotate(model, glm::radians(rotation.y), glm::vec3(0,1,0));
     model = glm::rotate(model, glm::radians(rotation.z), glm::vec3(0,0,1)); 
 
-    // Scale
+    // Set position
+    model = glm::translate(model, position);
+
+    // Scale. Must be after setting position, otherwise the actual position will be like.. Fucked cuz of the scaling
+    // For whatever reason, anyway.
     model = glm::scale(model, scale);
+
+
     // Projection, view and model matrix stuff
     glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 }

@@ -35,6 +35,8 @@ void ImGui_Implement::NewFrame() {
         const char* items[] = { "Triangle", "Circle", "Square" };
         static float col[4] = {1.f, 1.f, 1.f, 1};
         static float pos[3] = {0.f, 0.f, 0.f};
+        static float orig[3] = { 0.f, 0.f, 0.f };
+        static float rot[3] = { 0.f, 0.f, 0.f };
         static float scale = 1.0f;
         static std::string p = "Shaders/Testing/standard.glsl";
         static int item_current = 1;
@@ -57,6 +59,7 @@ void ImGui_Implement::NewFrame() {
             ImGui::ColorEdit4("Pick a color!", col);
             ImGui::SliderFloat("Scale", &scale, 1.0f, 10.0f);
             ImGui::InputFloat3("Position", pos, "%.f");
+            ImGui::InputFloat3("Origin", orig, "%.2f");
             ImGui::SeparatorText("Object Functionality");
         }
         if (item_current == 0) // Triangle
@@ -94,6 +97,7 @@ void ImGui_Implement::NewFrame() {
                     t->SetColor({col[0], col[1], col[2], col[3]});
                     t->SetScale({scale, scale, scale});
                     t->SetIndices(indices);
+                    t->SetOrigin({ orig[0], orig[1], orig[2]});
                     renderer->cache_share_renderable(t);
                     renderables.push_back(t);
                 }
@@ -110,6 +114,8 @@ void ImGui_Implement::NewFrame() {
                     c->SetPosition({pos[0], pos[1], pos[2]});
                     c->SetColor({col[0], col[1], col[2], col[3]});
                     c->SetScale({scale, scale, scale});
+					c->SetOrigin({ orig[0], orig[1], orig[2] });
+
                     renderer->cache_share_renderable(c);
                     renderables.push_back(c);
                 }
@@ -130,6 +136,8 @@ void ImGui_Implement::NewFrame() {
                     s->SetPosition({pos[0], pos[1], pos[2]});
                     s->SetColor({col[0], col[1], col[2], col[3]});
                     s->SetScale({scale, scale, scale});
+					s->SetOrigin({ orig[0], orig[1], orig[2] });
+
                     renderer->cache_share_renderable(s);
                     renderables.push_back(s);
                 }
