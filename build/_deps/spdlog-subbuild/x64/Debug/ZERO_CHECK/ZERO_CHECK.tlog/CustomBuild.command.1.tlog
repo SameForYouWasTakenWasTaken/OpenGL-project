@@ -1,0 +1,10 @@
+^C:\USERS\AMAR\SOURCE\REPOS\T\OPENGL-PROJECT\BUILD\_DEPS\SPDLOG-SUBBUILD\CMAKEFILES\2216AC725C75C3F31BCBF6F20F260F63\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/spdlog-subbuild -BC:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/spdlog-subbuild --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/spdlog-subbuild/spdlog-populate.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

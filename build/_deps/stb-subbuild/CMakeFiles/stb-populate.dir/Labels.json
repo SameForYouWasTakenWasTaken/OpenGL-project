@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/stb-subbuild/CMakeFiles/stb-populate"
+		},
+		{
+			"file" : "C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/stb-subbuild/CMakeFiles/7b2a983a2df0508abb08e8bb32dbba3f/stb-populate.rule"
+		},
+		{
+			"file" : "C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/stb-subbuild/CMakeFiles/38dbd4d141740fa0f61772acda0ca539/stb-populate-complete.rule"
+		},
+		{
+			"file" : "C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/stb-subbuild/CMakeFiles/7f269e386fd8979102f5926fb3f0bd2e/stb-populate-build.rule"
+		},
+		{
+			"file" : "C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/stb-subbuild/CMakeFiles/7f269e386fd8979102f5926fb3f0bd2e/stb-populate-configure.rule"
+		},
+		{
+			"file" : "C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/stb-subbuild/CMakeFiles/7f269e386fd8979102f5926fb3f0bd2e/stb-populate-download.rule"
+		},
+		{
+			"file" : "C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/stb-subbuild/CMakeFiles/7f269e386fd8979102f5926fb3f0bd2e/stb-populate-install.rule"
+		},
+		{
+			"file" : "C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/stb-subbuild/CMakeFiles/7f269e386fd8979102f5926fb3f0bd2e/stb-populate-mkdir.rule"
+		},
+		{
+			"file" : "C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/stb-subbuild/CMakeFiles/7f269e386fd8979102f5926fb3f0bd2e/stb-populate-patch.rule"
+		},
+		{
+			"file" : "C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/stb-subbuild/CMakeFiles/7f269e386fd8979102f5926fb3f0bd2e/stb-populate-test.rule"
+		},
+		{
+			"file" : "C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/stb-subbuild/CMakeFiles/7f269e386fd8979102f5926fb3f0bd2e/stb-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"stb-populate"
+		],
+		"name" : "stb-populate"
+	}
+}

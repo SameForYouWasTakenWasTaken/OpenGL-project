@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Amar\source\repos\t\OpenGL-project\build\_deps\spdlog-subbuild\CMakeFiles\5a6f585449f44cc9bcac890a08b4b2a1\spdlog-populate-mkdir.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\Amar\source\repos\t\OpenGL-project\build\_deps\spdlog-subbuild\CMakeFiles\5a6f585449f44cc9bcac890a08b4b2a1\spdlog-populate-download.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\Amar\source\repos\t\OpenGL-project\build\_deps\spdlog-subbuild\CMakeFiles\5a6f585449f44cc9bcac890a08b4b2a1\spdlog-populate-update.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\Amar\source\repos\t\OpenGL-project\build\_deps\spdlog-subbuild\CMakeFiles\5a6f585449f44cc9bcac890a08b4b2a1\spdlog-populate-patch.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\Amar\source\repos\t\OpenGL-project\build\_deps\spdlog-subbuild\CMakeFiles\5a6f585449f44cc9bcac890a08b4b2a1\spdlog-populate-configure.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\Amar\source\repos\t\OpenGL-project\build\_deps\spdlog-subbuild\CMakeFiles\5a6f585449f44cc9bcac890a08b4b2a1\spdlog-populate-build.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\Amar\source\repos\t\OpenGL-project\build\_deps\spdlog-subbuild\CMakeFiles\5a6f585449f44cc9bcac890a08b4b2a1\spdlog-populate-install.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\Amar\source\repos\t\OpenGL-project\build\_deps\spdlog-subbuild\CMakeFiles\5a6f585449f44cc9bcac890a08b4b2a1\spdlog-populate-test.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\Amar\source\repos\t\OpenGL-project\build\_deps\spdlog-subbuild\CMakeFiles\0f25fbac2efc097de9d541905e33c719\spdlog-populate-complete.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\Amar\source\repos\t\OpenGL-project\build\_deps\spdlog-subbuild\CMakeFiles\2216ac725c75c3f31bcbf6f20f260f63\spdlog-populate.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\Amar\source\repos\t\OpenGL-project\build\_deps\spdlog-subbuild\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\Amar\source\repos\t\OpenGL-project\build\_deps\spdlog-subbuild\CMakeFiles\spdlog-populate" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{47E05179-1D88-3674-8824-8F77C199ED50}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

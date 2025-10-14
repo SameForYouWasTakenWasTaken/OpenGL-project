@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Amar\source\repos\t\OpenGL-project\build\_deps\glfw-subbuild\CMakeFiles\5b6cdfd2465c2612f4eb9a3f5ccaba94\glfw-populate-mkdir.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\Amar\source\repos\t\OpenGL-project\build\_deps\glfw-subbuild\CMakeFiles\5b6cdfd2465c2612f4eb9a3f5ccaba94\glfw-populate-download.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\Amar\source\repos\t\OpenGL-project\build\_deps\glfw-subbuild\CMakeFiles\5b6cdfd2465c2612f4eb9a3f5ccaba94\glfw-populate-update.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\Amar\source\repos\t\OpenGL-project\build\_deps\glfw-subbuild\CMakeFiles\5b6cdfd2465c2612f4eb9a3f5ccaba94\glfw-populate-patch.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\Amar\source\repos\t\OpenGL-project\build\_deps\glfw-subbuild\CMakeFiles\5b6cdfd2465c2612f4eb9a3f5ccaba94\glfw-populate-configure.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\Amar\source\repos\t\OpenGL-project\build\_deps\glfw-subbuild\CMakeFiles\5b6cdfd2465c2612f4eb9a3f5ccaba94\glfw-populate-build.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\Amar\source\repos\t\OpenGL-project\build\_deps\glfw-subbuild\CMakeFiles\5b6cdfd2465c2612f4eb9a3f5ccaba94\glfw-populate-install.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\Amar\source\repos\t\OpenGL-project\build\_deps\glfw-subbuild\CMakeFiles\5b6cdfd2465c2612f4eb9a3f5ccaba94\glfw-populate-test.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\Amar\source\repos\t\OpenGL-project\build\_deps\glfw-subbuild\CMakeFiles\85a5671ab518138c57c714175c2eb121\glfw-populate-complete.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\Amar\source\repos\t\OpenGL-project\build\_deps\glfw-subbuild\CMakeFiles\398d5ca5609f5f90fdf703db4fd86fa6\glfw-populate.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\Amar\source\repos\t\OpenGL-project\build\_deps\glfw-subbuild\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\Amar\source\repos\t\OpenGL-project\build\_deps\glfw-subbuild\CMakeFiles\glfw-populate" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{E72A2EA5-318C-323C-9B66-1F62A6374D84}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

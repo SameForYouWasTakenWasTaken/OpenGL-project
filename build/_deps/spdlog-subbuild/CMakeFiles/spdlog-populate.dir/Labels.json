@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/spdlog-subbuild/CMakeFiles/spdlog-populate"
+		},
+		{
+			"file" : "C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/spdlog-subbuild/CMakeFiles/2216ac725c75c3f31bcbf6f20f260f63/spdlog-populate.rule"
+		},
+		{
+			"file" : "C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/spdlog-subbuild/CMakeFiles/0f25fbac2efc097de9d541905e33c719/spdlog-populate-complete.rule"
+		},
+		{
+			"file" : "C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/spdlog-subbuild/CMakeFiles/5a6f585449f44cc9bcac890a08b4b2a1/spdlog-populate-build.rule"
+		},
+		{
+			"file" : "C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/spdlog-subbuild/CMakeFiles/5a6f585449f44cc9bcac890a08b4b2a1/spdlog-populate-configure.rule"
+		},
+		{
+			"file" : "C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/spdlog-subbuild/CMakeFiles/5a6f585449f44cc9bcac890a08b4b2a1/spdlog-populate-download.rule"
+		},
+		{
+			"file" : "C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/spdlog-subbuild/CMakeFiles/5a6f585449f44cc9bcac890a08b4b2a1/spdlog-populate-install.rule"
+		},
+		{
+			"file" : "C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/spdlog-subbuild/CMakeFiles/5a6f585449f44cc9bcac890a08b4b2a1/spdlog-populate-mkdir.rule"
+		},
+		{
+			"file" : "C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/spdlog-subbuild/CMakeFiles/5a6f585449f44cc9bcac890a08b4b2a1/spdlog-populate-patch.rule"
+		},
+		{
+			"file" : "C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/spdlog-subbuild/CMakeFiles/5a6f585449f44cc9bcac890a08b4b2a1/spdlog-populate-test.rule"
+		},
+		{
+			"file" : "C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/spdlog-subbuild/CMakeFiles/5a6f585449f44cc9bcac890a08b4b2a1/spdlog-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"spdlog-populate"
+		],
+		"name" : "spdlog-populate"
+	}
+}

@@ -1,0 +1,14 @@
+# Target labels
+ spdlog-populate
+# Source files and their labels
+C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/spdlog-subbuild/CMakeFiles/spdlog-populate
+C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/spdlog-subbuild/CMakeFiles/2216ac725c75c3f31bcbf6f20f260f63/spdlog-populate.rule
+C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/spdlog-subbuild/CMakeFiles/0f25fbac2efc097de9d541905e33c719/spdlog-populate-complete.rule
+C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/spdlog-subbuild/CMakeFiles/5a6f585449f44cc9bcac890a08b4b2a1/spdlog-populate-build.rule
+C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/spdlog-subbuild/CMakeFiles/5a6f585449f44cc9bcac890a08b4b2a1/spdlog-populate-configure.rule
+C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/spdlog-subbuild/CMakeFiles/5a6f585449f44cc9bcac890a08b4b2a1/spdlog-populate-download.rule
+C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/spdlog-subbuild/CMakeFiles/5a6f585449f44cc9bcac890a08b4b2a1/spdlog-populate-install.rule
+C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/spdlog-subbuild/CMakeFiles/5a6f585449f44cc9bcac890a08b4b2a1/spdlog-populate-mkdir.rule
+C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/spdlog-subbuild/CMakeFiles/5a6f585449f44cc9bcac890a08b4b2a1/spdlog-populate-patch.rule
+C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/spdlog-subbuild/CMakeFiles/5a6f585449f44cc9bcac890a08b4b2a1/spdlog-populate-test.rule
+C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/spdlog-subbuild/CMakeFiles/5a6f585449f44cc9bcac890a08b4b2a1/spdlog-populate-update.rule

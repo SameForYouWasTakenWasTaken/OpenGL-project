@@ -1,0 +1,21 @@
+﻿  Building Custom Rule C:/Users/Amar/source/repos/t/OpenGL-project/CMakeLists.txt
+  Camera.cpp
+  Game.cpp
+  ImGui_Implement.cpp
+  errorReporting.cpp
+  Renderable.cpp
+  Circle.cpp
+  Square.cpp
+  Triangle.cpp
+  Renderer.cpp
+  main.cpp
+  imgui.cpp
+  imgui_draw.cpp
+  imgui_tables.cpp
+  imgui_widgets.cpp
+  imgui_demo.cpp
+  imgui_impl_glfw.cpp
+  imgui_impl_opengl3.cpp
+  Generating Code...
+  glad.c
+  main.vcxproj -> C:\Users\Amar\source\repos\t\OpenGL-project\build\Debug\main.exe

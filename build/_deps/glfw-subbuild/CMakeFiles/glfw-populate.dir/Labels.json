@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/glfw-subbuild/CMakeFiles/glfw-populate"
+		},
+		{
+			"file" : "C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/glfw-subbuild/CMakeFiles/398d5ca5609f5f90fdf703db4fd86fa6/glfw-populate.rule"
+		},
+		{
+			"file" : "C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/glfw-subbuild/CMakeFiles/85a5671ab518138c57c714175c2eb121/glfw-populate-complete.rule"
+		},
+		{
+			"file" : "C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/glfw-subbuild/CMakeFiles/5b6cdfd2465c2612f4eb9a3f5ccaba94/glfw-populate-build.rule"
+		},
+		{
+			"file" : "C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/glfw-subbuild/CMakeFiles/5b6cdfd2465c2612f4eb9a3f5ccaba94/glfw-populate-configure.rule"
+		},
+		{
+			"file" : "C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/glfw-subbuild/CMakeFiles/5b6cdfd2465c2612f4eb9a3f5ccaba94/glfw-populate-download.rule"
+		},
+		{
+			"file" : "C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/glfw-subbuild/CMakeFiles/5b6cdfd2465c2612f4eb9a3f5ccaba94/glfw-populate-install.rule"
+		},
+		{
+			"file" : "C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/glfw-subbuild/CMakeFiles/5b6cdfd2465c2612f4eb9a3f5ccaba94/glfw-populate-mkdir.rule"
+		},
+		{
+			"file" : "C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/glfw-subbuild/CMakeFiles/5b6cdfd2465c2612f4eb9a3f5ccaba94/glfw-populate-patch.rule"
+		},
+		{
+			"file" : "C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/glfw-subbuild/CMakeFiles/5b6cdfd2465c2612f4eb9a3f5ccaba94/glfw-populate-test.rule"
+		},
+		{
+			"file" : "C:/Users/Amar/source/repos/t/OpenGL-project/build/_deps/glfw-subbuild/CMakeFiles/5b6cdfd2465c2612f4eb9a3f5ccaba94/glfw-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"glfw-populate"
+		],
+		"name" : "glfw-populate"
+	}
+}
