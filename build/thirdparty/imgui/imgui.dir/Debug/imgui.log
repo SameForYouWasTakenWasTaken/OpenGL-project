@@ -1,9 +1,0 @@
-﻿  Building Custom Rule C:/Users/Amar/source/repos/t/OpenGL-project/thirdparty/imgui/CMakeLists.txt
-  imgui.cpp
-  imgui_draw.cpp
-  imgui_tables.cpp
-  imgui_widgets.cpp
-  imgui_impl_glfw.cpp
-  imgui_impl_opengl3.cpp
-  Generating Code...
-  imgui.vcxproj -> C:\Users\Amar\source\repos\t\OpenGL-project\build\thirdparty\imgui\Debug\imgui.lib

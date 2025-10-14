@@ -5,17 +5,16 @@ Triangle::Triangle(std::vector<Vertex>& vertices, std::string& pathToShaderSourc
 {
     auto ShaderSources = ParseShaderFile(pathToShaderSource);
 
-    VAOattrib pos;
-    pos.layout = 0;
-    pos.numComponents = 3;
-    pos.stride = 6;
-    pos.offset = 0;
+	VAOattrib pos;
+	pos.layout = 0;
+	pos.numComponents = 3;
+	pos.stride = Vertex::stride();
+	pos.offset = offsetof(Vertex, position);
 
-    VAOattrib color;
-    color.layout = 1;
-    color.numComponents = 3;
-    color.stride = 6;
-    color.offset = 3;
+	VAOattrib color = pos;
+	color.layout = 1;
+	color.numComponents = 4;
+	color.offset = offsetof(Vertex, color);
 
     LinkAttrib(pos);
     LinkAttrib(color);

@@ -73,7 +73,7 @@ private:
         void Move(glm::vec3 pos);
         void Rotate(float degrees, ROTATION rotation_direction);
         void SetScale(const glm::vec3& amnt);
-        void SetColor(const glm::vec3& col);
+        void SetColor(const glm::vec4& col);
         // Information functions
         std::pair<bool, bool> available_shader_sources(); // first : vertex, second : fragment
         bool available_shader() {return shader->Available();}

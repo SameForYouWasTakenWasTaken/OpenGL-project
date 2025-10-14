@@ -61,11 +61,11 @@ bool Game::init(int width, int height){
     enableReportGlErrors();
 
     // OpenGL initialization (after creating context)
-    glEnable(GL_DEPTH_TEST); // ensures correct depth rendering
     // glEnable(GL_CULL_FACE); // enable face culling
-    // glCullFace(GL_BACK); // cull back-facing triangles
-    // glFrontFace(GL_CCW); // define counter-clockwise triangles as front faces
+    glEnable(GL_DEPTH_TEST); // ensures correct depth rendering
+	glEnable(GL_BLEND); // Enables blending
     glDepthFunc(GL_LESS); // default: pass if fragment is closer
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // Blending alpha thingy. Basically lets stuff be opaque or not
 
     spdlog::info("Loaded OpenGL: {}", version);
     // spdlog::info("GL Renderer: {}", glGetString(GL_RENDERER));
@@ -93,10 +93,10 @@ void Game::run() {
     glfwSetCursorPosCallback(window, mousePosCallback);
 
     std::vector<Vertex> triangle_vertices = {
-        {{-0.5f, -0.5f, 0.0f}, {1.5f, 0.2f, 0.3f}}, // Bottom left
-        {{0.5f, -0.5f, 0.0f}, {1.f, 0.779f, 0.6f}}, // Bottom right
-        {{0.0f,  0.5f, 0.0f}, {1.1f, 0.3f, 0.9f}}, // Top center
-        {{0.0f,  0.0f, 1.0f}, {0.5f, 0.1f, 0.3f}} // Z axis
+        {{-0.5f, -0.5f, 0.0f}, {1.5f, 0.2f, 0.3f, 1}}, // Bottom left
+        {{0.5f, -0.5f, 0.0f}, {1.f, 0.779f, 0.6f, 1}}, // Bottom right
+        {{0.0f,  0.5f, 0.0f}, {1.1f, 0.3f, 0.9f, 1}}, // Top center
+        {{0.0f,  0.0f, 1.0f}, {0.5f, 0.1f, 0.3f, 1}} // Z axis
     };
     std::vector<unsigned int> triangle_indices = {
         0, 1, 2, // base
@@ -105,49 +105,10 @@ void Game::run() {
         2, 0, 3  // side
     };
     
-    float a = 5;
-    float b = 5;
-    float c = 5;
-   
-    std::vector<Vertex> cube_vertices = {
-        // FRONT FACE (z = 0)
-        {{-a/2,  b/2, 0.0f}, {1.f, 1.f, 0.f}}, // 0 Top-left
-        {{ a/2,  b/2, 0.0f}, {1.f, 1.f, 0.f}}, // 1 Top-right
-        {{ a/2, -b/2, 0.0f}, {1.f, 1.f, 1.f}}, // 2 Bottom-right
-        {{-a/2, -b/2, 0.0f}, {1.f, 1.f, 1.f}}, // 3 Bottom-left
-
-        // BACK FACE (z = c)
-        {{-a/2,  b/2, c}, {1.f, 0.f, 1.f}}, // 4 Top-left
-        {{ a/2,  b/2, c}, {1.f, 0.f, 1.f}}, // 5 Top-right
-        {{ a/2, -b/2, c}, {0.f, 1.f, 1.f}}, // 6 Bottom-right
-        {{-a/2, -b/2, c}, {0.f, 1.f, 1.f}}  // 7 Bottom-left
-    };
-
-    std::vector<GLuint> cube_indices = {
-        // Front face
-        0, 1, 3,   // top-left, top-right, bottom-left
-        1, 2, 3,   // top-right, bottom-right, bottom-left
-
-        // Back face (winding flipped for -z)
-        4, 7, 5,   // top-left, bottom-left, top-right
-        5, 7, 6,   // top-right, bottom-left, bottom-right
-
-        // Left face
-        0, 3, 4,   // front top-left, front bottom-left, back top-left
-        4, 3, 7,   // back top-left, front bottom-left, back bottom-left
-
-        // Right face
-        1, 5, 2,   // front top-right, back top-right, front bottom-right
-        5, 6, 2,   // back top-right, back bottom-right, front bottom-right
-
-        // Bottom face
-        3, 2, 7,   // front bottom-left, front bottom-right, back bottom-left
-        2, 6, 7,   // front bottom-right, back bottom-right, back bottom-left
-
-        // Top face
-        0, 4, 1,   // front top-left, back top-left, front top-right
-        1, 4, 5    // front top-right, back top-left, back top-right
-    };
+    // Cube
+    const float a = 5;
+    const float b = 5;
+    const float c = 5;
 
 
     std::string standard_shader_path = "Shaders/Testing/standard.glsl";
@@ -160,9 +121,11 @@ void Game::run() {
     obj2->SetPosition({10.f, 0.f, 0.f});
     obj2->SetScale({5.f,5.f,10.f});
 
-    auto obj3 = std::make_unique<Square>(cube_vertices, cube_indices, standard_shader_path);
+    auto obj3 = std::make_unique<Square>(a, b, c, standard_shader_path);
     obj3->SetPosition({-10.f, 0.f, 0.f});
     obj3->SetScale({2.f,2.f,2.f});
+
+    obj->SetColor({ 1,1,1, 1});
 
     // Now push it into the vector
     renderer->cache_draw(std::move(obj3));
@@ -195,8 +158,8 @@ void Game::run() {
 
 void Game::update(float dt)
 {
-    float speed = 10.f * dt;
-    float rot_speed = 60.f * dt;
+    const float speed = 10.f * dt;
+    const float rot_speed = 60.f * dt;
     glm::vec3 move(0.f);
     glm::vec3 rot(0.f);
     // WASD/QE

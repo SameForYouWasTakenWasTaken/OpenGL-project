@@ -108,7 +108,7 @@ void Renderable::SetPosition(const glm::vec3& newPos)
     position = newPos;
 }
 
-void Renderable::SetColor(const glm::vec3& col)
+void Renderable::SetColor(const glm::vec4& col)
 {
     for (Vertex& v : vertices){
         v.color = col;

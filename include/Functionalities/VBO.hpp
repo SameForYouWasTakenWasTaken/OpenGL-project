@@ -5,7 +5,11 @@
 
 struct Vertex {
     glm::vec3 position;
-    glm::vec3 color = {1.f, 1.f, 1.f}; // default white
+    glm::vec4 color = {1.f, 1.f, 1.f, 1.f}; // default white
+
+	static constexpr GLsizei stride() noexcept {
+		return static_cast<GLsizei>(sizeof(Vertex));
+	}
 };
 
 class VBO

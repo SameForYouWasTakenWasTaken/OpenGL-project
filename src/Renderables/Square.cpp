@@ -13,15 +13,15 @@ static std::vector<Vertex> ValidateCornerPoints(std::vector<Vertex>& corner_poin
 Square::Square(float a, float b, float c, std::string& pathToShaderSource) 
 : Renderable(
     std::vector<Vertex>{
-        {{-a/2,  b/2, 0.f}, {1.f, 1.f, 1.f}}, // Top left
-        {{ a/2,  b/2, 0.f}, {1.f, 1.f, 1.f}}, // Top right
-        {{ a/2, -b/2, 0.f}, {1.f, 1.f, 1.f}}, // Bottom right
-        {{-a/2, -b/2, 0.f}, {1.f, 1.f, 1.f}}, // Bottom left
+        {{-a/2,  b/2, 0.f}, {1.f, 1.f, 1.f, 1}}, // Top left
+        {{ a/2,  b/2, 0.f}, {1.f, 1.f, 1.f, 1}}, // Top right
+        {{ a/2, -b/2, 0.f}, {1.f, 1.f, 1.f, 1}}, // Bottom right
+        {{-a/2, -b/2, 0.f}, {1.f, 1.f, 1.f, 1}}, // Bottom left
 
-        {{-a/2,  b/2, c}, {1.f, 0.f, 1.f}}, // 4 Top-left
-        {{ a/2,  b/2, c}, {1.f, 0.f, 1.f}}, // 5 Top-right
-        {{ a/2, -b/2, c}, {0.f, 1.f, 1.f}}, // 6 Bottom-right
-        {{-a/2, -b/2, c}, {0.f, 1.f, 1.f}}  // 7 Bottom-left
+        {{-a/2,  b/2, c}, {1.f, 0.f, 1.f, 1}}, // 4 Top-left
+        {{ a/2,  b/2, c}, {1.f, 0.f, 1.f, 1}}, // 5 Top-right
+        {{ a/2, -b/2, c}, {0.f, 1.f, 1.f, 1}}, // 6 Bottom-right
+        {{-a/2, -b/2, c}, {0.f, 1.f, 1.f, 1}}  // 7 Bottom-left
     },
     std::vector<GLuint>{
         // Front face
@@ -52,17 +52,16 @@ Square::Square(float a, float b, float c, std::string& pathToShaderSource)
 {
     auto ShaderSources = ParseShaderFile(pathToShaderSource);
 
-    VAOattrib pos;
-    pos.layout = 0;
-    pos.numComponents = 3;
-    pos.stride = 6; // 3 vec3 (pos), 3 vec3 (color)
-    pos.offset = 0;
+	VAOattrib pos;
+	pos.layout = 0;
+	pos.numComponents = 3;
+	pos.stride = Vertex::stride();
+	pos.offset = offsetof(Vertex, position);
 
-    VAOattrib color;
-    color.layout = 1;
-    color.numComponents = 3;
-    color.stride = 6;
-    color.offset = 3;
+	VAOattrib color = pos;
+	color.layout = 1;
+	color.numComponents = 4;
+	color.offset = offsetof(Vertex, color);
 
     LinkAttrib(pos);
     LinkAttrib(color);
@@ -76,18 +75,16 @@ Square::Square(std::vector<Vertex>& corner_points, std::vector<GLuint>& indices,
 {
 
     auto ShaderSources = ParseShaderFile(pathToShadersource);
+	VAOattrib pos;
+	pos.layout = 0;
+	pos.numComponents = 3;
+	pos.stride = Vertex::stride();
+	pos.offset = offsetof(Vertex, position);
 
-    VAOattrib pos;
-    pos.layout = 0;
-    pos.numComponents = 3;
-    pos.stride = 6; // 3 vec3 (pos), 3 vec3 (color)
-    pos.offset = 0;
-
-    VAOattrib color;
-    color.layout = 1;
-    color.numComponents = 3;
-    color.stride = 6;
-    color.offset = 3;
+	VAOattrib color = pos;
+	color.layout = 1;
+	color.numComponents = 4;
+	color.offset = offsetof(Vertex, color);
 
     LinkAttrib(pos);
     LinkAttrib(color);
@@ -96,19 +93,19 @@ Square::Square(std::vector<Vertex>& corner_points, std::vector<GLuint>& indices,
     create_shaders();
 
 	std::vector<Vertex> triangle_vertices = {
-		{{-0.5f, -0.5f, 0.0f}, {1.5f, 0.2f, 0.3f}}, // Bottom left
-		{{0.5f, -0.5f, 0.0f}, {1.f, 0.779f, 0.6f}}, // Bottom right
-		{{0.0f,  0.5f, 0.0f}, {1.1f, 0.3f, 0.9f}}, // Top center
+		{{-0.5f, -0.5f, 0.0f}, {1.5f, 0.2f, 0.3f, 1}}, // Bottom left
+		{{0.5f, -0.5f, 0.0f}, {1.f, 0.779f, 0.6f, 1}}, // Bottom right
+		{{0.0f,  0.5f, 0.0f}, {1.1f, 0.3f, 0.9f, 1}}, // Top center
 	};
 }
 Square::Square(float a, float b, std::string& pathToShaderSource)
 
 : Renderable(
     std::vector<Vertex>{
-        {{-a/2,  b/2, 0.f}, {1.f, 1.f, 1.f}}, // Top left
-        {{ a/2,  b/2, 0.f}, {1.f, 1.f, 1.f}}, // Top right
-        {{ a/2, -b/2, 0.f}, {1.f, 1.f, 1.f}}, // Bottom right
-        {{-a/2, -b/2, 0.f}, {1.f, 1.f, 1.f}}, // Bottom left
+		{{-a / 2, b / 2, 0.f}, { 1.f, 1.f, 1.f, 1 }}, // Top left
+        {{ a/2,  b/2, 0.f}, {1.f, 1.f, 1.f, 1}}, // Top right
+        {{ a/2, -b/2, 0.f}, {1.f, 1.f, 1.f, 1}}, // Bottom right
+        {{-a/2, -b/2, 0.f}, {1.f, 1.f, 1.f, 1}}, // Bottom left
     },
     std::vector<GLuint>{
         0, 3, 2, // covers Bottom left triangle
@@ -118,17 +115,16 @@ Square::Square(float a, float b, std::string& pathToShaderSource)
 {
     auto ShaderSources = ParseShaderFile(pathToShaderSource);
 
-    VAOattrib pos;
-    pos.layout = 0;
-    pos.numComponents = 3;
-    pos.stride = 6; // 3 vec3 (pos), 3 vec3 (color)
-    pos.offset = 0;
+	VAOattrib pos;
+	pos.layout = 0;
+	pos.numComponents = 3;
+	pos.stride = Vertex::stride();
+	pos.offset = offsetof(Vertex, position);
 
-    VAOattrib color;
-    color.layout = 1;
-    color.numComponents = 3;
-    color.stride = 6;
-    color.offset = 3;
+	VAOattrib color = pos;
+	color.layout = 1;
+	color.numComponents = 4;
+	color.offset = offsetof(Vertex, color);
 
     LinkAttrib(pos);
     LinkAttrib(color);
