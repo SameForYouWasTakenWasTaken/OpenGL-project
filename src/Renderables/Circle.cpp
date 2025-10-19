@@ -5,24 +5,24 @@
 
 std::vector<Vertex> Create(float radius, const glm::vec3& position, size_t iter_num)
 {
-    std::vector<Vertex> _vertices;
+	std::vector<Vertex> _vertices;
 
-    _vertices.push_back({{position.x, position.y, 0}, {1.f, 1.f, 1.f, 1.f}}); // center
-    
-    for (size_t i = 0; i <= iter_num; i++) {  // <= to close the loop
-        float theta = (2 * PI * i) / iter_num;
-        float x = radius * cos(theta) + position.x;
-        float y = radius * sin(theta) + position.y;
-        _vertices.push_back({{x, y, 0}, {0.f, 0.f, .5f, 1.f}});
-    }
+	_vertices.push_back({ {position.x, position.y, 0}, {1.f, 1.f, 1.f, 1.f} }); // center
 
-    return _vertices;
+	for (size_t i = 0; i <= iter_num; i++) {
+		float theta = (2 * PI * i) / iter_num;
+		float x = radius * cos(theta) + position.x;
+		float y = radius * sin(theta) + position.y;
+		_vertices.push_back({ {x, y, 0}, {0.f, 0.f, .5f, 1.f} });
+	}
+
+	return _vertices;
 }
 
 Circle::Circle(float r, size_t iter_num, std::string& pathToShaderFile)
-: radius(r), Renderable(Create(r, {0,0,0}, iter_num))
+	: radius(r), Renderable(Create(r, { 0,0,0 }, iter_num))
 {
-    auto ShaderSources = ParseShaderFile(pathToShaderFile);
+	auto ShaderSources = ParseShaderFile(pathToShaderFile);
 
 	VAOattrib pos;
 	pos.layout = 0;
@@ -32,18 +32,18 @@ Circle::Circle(float r, size_t iter_num, std::string& pathToShaderFile)
 
 	VAOattrib color = pos;
 	color.layout = 1;
-    color.numComponents = 4;
+	color.numComponents = 4;
 	color.offset = offsetof(Vertex, color);
 
-    LinkAttrib(pos);
-    LinkAttrib(color);
+	LinkAttrib(pos);
+	LinkAttrib(color);
 
-    set_shader_sources(ShaderSources.FragmentSource, ShaderSources.VertexSource);
-    create_shaders();
+	set_shader_sources(ShaderSources.FragmentSource, ShaderSources.VertexSource);
+	create_shaders();
 }
 
 
 void Circle::draw(GLenum usage) {
-    CommonDraw();
-    glDrawArrays(GL_TRIANGLE_FAN, 0, vertices.size());
+	CommonDraw();
+	glDrawArrays(GL_TRIANGLE_FAN, 0, vertices.size());
 }
