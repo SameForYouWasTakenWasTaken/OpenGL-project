@@ -55,3 +55,5 @@ CMake Error: CMAKE_CXX_COMPILER not set, after EnableLanguage
 -- Configuring incomplete, errors occurred!
 ```
 ❗Then your terminal might not have found the location of your compiler. Try running the compiler' commands, such ass `gcc -v`. If the terminal cannot find it or doesn't recognize `gcc`, then that is your issue. Another fix might be to change the build type, because you probably are using the default selection. (i.e, not using the -G flag)
+
+The executable file should be directly in the build file! Just go ahead and double click it. You may also notice `unit_tests.exe`. This is only for testing purposes, and is only used for development.
