@@ -20,7 +20,7 @@ cd OpenGL-Project
 ```
 Once you have run these set of commands, you should be inside a folder called OpenGL-Project. Now, we have to build it. 
 
-❗ If you downloaded the C++ Compiler linked by the tutorial above, then you probably have the GCC/Clang compiler. If you have a different compiler, please select a different build system, which will be mentioned below.
+❗ If you downloaded the C++ Compiler linked by the tutorial above, then you probably have the GCC compiler. If you have a different compiler, please select a different build system, which will be mentioned below.
 
 Let's start by making a simple build folder to store all of the messy files CMake will generate.
 ```command
